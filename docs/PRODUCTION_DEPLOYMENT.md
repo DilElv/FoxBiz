@@ -43,4 +43,13 @@ Rilis pertama belum memiliki versi production sebelumnya. Jika smoke gagal, hent
 
 ## Status
 
-Persiapan host dan database telah dilakukan; build/migrasi, aktivasi service, DNS/TLS dan smoke akhir masih harus dikonfirmasi. Hasil aktual akan dicatat di `PRODUCTION_RELEASE_RESULTS.json`.
+Status runtime per 18 November 2026:
+
+- Build production Next.js/NestJS lulus di Ubuntu/Node 20.
+- Ketujuh migrasi berhasil diterapkan pada database baru `foxbiz_production`; `db:status` menyatakan schema up to date.
+- Tenant `foxbiz`, akun owner, role bawaan dan outlet MAIN dibuat tanpa data demo transaksi/produk. Kredensial awal disimpan root-only di `/etc/foxbiz/initial-owner.json`; kirimkan lewat kanal privat dan ganti password setelah login.
+- `foxbiz-api.service` dan `foxbiz-web.service` aktif; health API menyatakan database connected. Pengujian lokal melalui proxy lulus untuk login, cookie Secure/HttpOnly, session, CRM list, Finance metadata, POS products/customer lookup, serta logout/revocation. Foreign-origin ditolak 403 setelah perbaikan proxy.
+- Uji akhir melalui HTTPS publik belum dapat dilakukan. Saat diperiksa, `foxbiz.bikinsaas.com` belum resolve pada resolver publik; Nginx masih menyajikan 503 pada HTTP untuk host ini. Tambahkan DNS A `foxbiz` → `203.194.115.231`, lalu terbitkan sertifikat dan aktifkan konfigurasi HTTPS.
+- Kredensial DNS/SSH tidak disimpan di repository. Backup dan staging dilewati sesuai permintaan. Deployment pertama tidak memiliki release aplikasi atau backup data sebelumnya untuk rollback.
+
+Hasil final dan hash commit akan dicatat di `PRODUCTION_RELEASE_RESULTS.json` setelah push perbaikan proxy.

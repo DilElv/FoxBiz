@@ -1,0 +1,64 @@
+{
+  "verifiedAt": "2026-11-18T03:20:00+07:00",
+  "applicationVersion": "0.1.0",
+  "sourceCommit": "67ee19cd964d32c67e6ddbc65248efeae7474e05",
+  "target": {
+    "host": "203.194.115.231",
+    "web": "foxbiz.bikinsaas.com",
+    "database": "foxbiz_production",
+    "node": "20.20.2",
+    "postgresql": "16"
+  },
+  "status": "partially_deployed_waiting_for_public_dns",
+  "backup": "not_performed_as_requested",
+  "staging": "not_used_as_requested",
+  "gates": {
+    "webBuild": "pass",
+    "apiBuild": "pass",
+    "migration": {
+      "status": "pass",
+      "migrationsApplied": 7,
+      "schemaUpToDate": true
+    },
+    "productionBootstrap": "pass",
+    "apiService": "active",
+    "webService": "active",
+    "apiHealthDatabaseConnected": true,
+    "originAllowlist": "pass",
+    "productionProxySmoke": {
+      "status": "pass",
+      "checks": [
+        "foreign origin rejected",
+        "owner login through same-origin proxy",
+        "Secure and HttpOnly session cookie",
+        "owner session and outlet retrieval",
+        "CRM customer list",
+        "Finance metadata",
+        "POS product listing",
+        "POS customer lookup",
+        "logout revokes session"
+      ]
+    },
+    "publicDns": "pending_user_dns_record",
+    "httpsCertificate": "pending_public_dns",
+    "publicSmoke": "pending_https"
+  },
+  "runtime": {
+    "webPort": "127.0.0.1:3500",
+    "apiPort": "127.0.0.1:4500",
+    "httpVirtualHost": "enabled; returns 503 until TLS is configured",
+    "httpsVirtualHost": "not_enabled"
+  },
+  "bootstrap": {
+    "tenantSlug": "foxbiz",
+    "ownerEmail": "owner@foxbiz.bikinsaas.com",
+    "credentialFile": "/etc/foxbiz/initial-owner.json",
+    "demoProductsOrTransactions": false
+  },
+  "limits": [
+    "Operational UAT not performed",
+    "Physical-device testing not performed",
+    "Production-scale performance not measured",
+    "No prior application release or backup exists for rollback on this first deployment"
+  ]
+}

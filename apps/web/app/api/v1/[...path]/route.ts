@@ -11,7 +11,7 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
   const posCustomerAllowed = /^pos\/customers$/;
   if (!allowed.test(path) && !purchasingAllowed.test(path) && !financeAllowed.test(path) && !crmAllowed.test(path) && !posCustomerAllowed.test(path)) return NextResponse.json({ error: { message: 'Endpoint tidak ditemukan.' } }, { status: 404 });
   if (request.method !== 'GET') {
-    if (request.headers.get('origin') !== request.nextUrl.origin) return NextResponse.json({ error: { message: 'Origin tidak diizinkan.' } }, { status: 403 });
+    if (request.headers.get('origin') !== (process.env.WEB_ORIGIN ?? request.nextUrl.origin)) return NextResponse.json({ error: { message: 'Origin tidak diizinkan.' } }, { status: 403 });
     if (!request.headers.get('content-type')?.startsWith('application/json')) return NextResponse.json({ error: { message: 'Gunakan JSON.' } }, { status: 415 });
   }
   const headers = new Headers({ 'Content-Type': 'application/json', Origin: process.env.WEB_ORIGIN ?? 'http://localhost:3000' });
