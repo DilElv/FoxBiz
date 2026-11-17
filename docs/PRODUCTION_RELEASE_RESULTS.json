@@ -1,7 +1,7 @@
 {
-  "verifiedAt": "2026-11-18T03:20:00+07:00",
+  "verifiedAt": "2026-11-18T03:47:44+07:00",
   "applicationVersion": "0.1.0",
-  "sourceCommit": "67ee19cd964d32c67e6ddbc65248efeae7474e05",
+  "sourceCommit": "cf130c4f6bc15893db9d76db46367e0a2bfedd1f",
   "target": {
     "host": "203.194.115.231",
     "web": "foxbiz.bikinsaas.com",
@@ -13,6 +13,10 @@
   "backup": "not_performed_as_requested",
   "staging": "not_used_as_requested",
   "gates": {
+    "localUnitTests": { "passed": 3, "failed": 0 },
+    "localIntegrationTests": { "passed": 54, "failed": 0, "database": "foxbiz_sprint0" },
+    "localLint": "pass",
+    "localTypecheck": "pass",
     "webBuild": "pass",
     "apiBuild": "pass",
     "migration": {
@@ -56,6 +60,10 @@
     "demoProductsOrTransactions": false
   },
   "limits": [
+    "Public DNS returns NXDOMAIN; public HTTPS and domain smoke remain unverified",
+    "Server permits root SSH login and password authentication",
+    "Other applications listen on wildcard interfaces at ports 3100 and 3101; access controls require review",
+    "Password rotation is available through the administrator API, not the current UI",
     "Operational UAT not performed",
     "Physical-device testing not performed",
     "Production-scale performance not measured",

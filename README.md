@@ -2,6 +2,8 @@
 
 Panduan rilis production: [deployment foxbiz.bikinsaas.com](docs/PRODUCTION_DEPLOYMENT.md).
 
+Panduan staf dan alur penggunaan: [Panduan Penggunaan FoxBiz](docs/USER_GUIDE.md).
+
 FoxBiz adalah Full POS & Business Management System dengan arah visual Blue & White dan maskot Foxi. Workspace ini berisi fondasi Sprint 0, Sprint 1 (login/RBAC, organisasi/outlet, katalog dan inventori dasar), **Sprint 2 POS** dengan checkout tunai/EDC manual, stok atomik, recovery pembayaran, hold/resume dan struk, **Sprint 3 Inventori** dengan penyesuaian stok, penerimaan sederhana dan transfer antar-outlet, **Sprint 4 Purchasing** dengan supplier, PO dan penerimaan parsial, **Sprint 5 Finance** dengan pemasukan/pengeluaran tunai manual, void beralasan dan laporan kas per outlet/periode, serta **Sprint 6 CRM** dengan data/profil pelanggan, riwayat transaksi, segmentasi dasar dan pelanggan opsional pada POS.
 
 ## Stack
