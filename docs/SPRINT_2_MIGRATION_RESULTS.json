@@ -1,0 +1,9 @@
+{
+  "verifiedAt": "2026-11-16T21:48:22.082Z",
+  "applied": true,
+  "ownerUpgrade": true,
+  "defaultCashierUpgrade": true,
+  "defaultManagerUpgrade": true,
+  "customizedRolesPreserved": true,
+  "method": "Exact migration UPDATE statements against transaction-local temporary roles table; real role data unchanged."
+}

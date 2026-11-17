@@ -1,0 +1,100 @@
+{
+  "verifiedAt": "2026-11-17T08:20:16.340Z",
+  "reports": [
+    {
+      "viewport": "desktop",
+      "supplierCreate": true,
+      "draftEdit": true,
+      "order": true,
+      "partialReceipt": true,
+      "completeReceipt": true,
+      "lostResponseReloadSameKeyRetry": true,
+      "singleStockLedger": true,
+      "receiptDetail": true,
+      "cancellation": true,
+      "outletSwitch": true,
+      "overflow": {
+        "partial": false,
+        "pending": false,
+        "detail": false,
+        "complete": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "tablet",
+      "supplierCreate": true,
+      "draftEdit": true,
+      "order": true,
+      "partialReceipt": true,
+      "completeReceipt": true,
+      "lostResponseReloadSameKeyRetry": true,
+      "singleStockLedger": true,
+      "receiptDetail": true,
+      "cancellation": true,
+      "outletSwitch": true,
+      "overflow": {
+        "partial": false,
+        "pending": false,
+        "detail": false,
+        "complete": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "mobile390",
+      "supplierCreate": true,
+      "draftEdit": true,
+      "order": true,
+      "partialReceipt": true,
+      "completeReceipt": true,
+      "lostResponseReloadSameKeyRetry": true,
+      "singleStockLedger": true,
+      "receiptDetail": true,
+      "cancellation": true,
+      "outletSwitch": true,
+      "overflow": {
+        "partial": false,
+        "pending": false,
+        "detail": false,
+        "complete": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "mobile360",
+      "supplierCreate": true,
+      "draftEdit": true,
+      "order": true,
+      "partialReceipt": true,
+      "completeReceipt": true,
+      "lostResponseReloadSameKeyRetry": true,
+      "singleStockLedger": true,
+      "receiptDetail": true,
+      "cancellation": true,
+      "outletSwitch": true,
+      "overflow": {
+        "partial": false,
+        "pending": false,
+        "detail": false,
+        "complete": false
+      },
+      "errors": []
+    },
+    {
+      "emailRole": "viewer",
+      "denied": false,
+      "permissionUI": true
+    },
+    {
+      "emailRole": "none",
+      "denied": true,
+      "permissionUI": true
+    },
+    {
+      "emailRole": "receiver",
+      "denied": false,
+      "permissionUI": true
+    }
+  ]
+}

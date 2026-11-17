@@ -1,0 +1,11 @@
+{
+  "verifiedAt": "2026-11-17T06:36:36.646Z",
+  "applied": true,
+  "ownerUpgrade": true,
+  "defaultManagerUpgrade": true,
+  "sprint1AndSprint2ManagerUpgrade": true,
+  "defaultInventoryUpgrade": true,
+  "customizedRolesPreserved": true,
+  "cashierUnchanged": true,
+  "method": "Exact migration UPDATE statements against transaction-local temporary roles table; real role data unchanged."
+}

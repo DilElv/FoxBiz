@@ -1,0 +1,11 @@
+{
+  "verifiedAt": "2026-11-17T10:58:18.833Z",
+  "applied": true,
+  "ownerUpgrade": true,
+  "defaultManagerUpgrade": true,
+  "customizedRolesPreserved": true,
+  "inventoryCashierUnchanged": true,
+  "repeatableUpgrade": true,
+  "databaseConstraints": true,
+  "method": "Exact migration UPDATE statements against transaction-local temporary roles table; actual role data unchanged. Catalog inspection confirms checks and tenant foreign keys."
+}

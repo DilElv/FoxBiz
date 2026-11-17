@@ -1,0 +1,113 @@
+{
+  "verifiedAt": "2026-11-16T20:40:13.469Z",
+  "api": {
+    "status": 200,
+    "health": {
+      "status": "ok",
+      "service": "foxbiz-api",
+      "environment": "development",
+      "database": "connected",
+      "timestamp": "2026-11-16T20:38:27.235Z"
+    }
+  },
+  "reports": [
+    {
+      "viewport": "desktop-1440",
+      "status": 200,
+      "title": "FoxBiz — POS & Business Management System",
+      "htmlLang": "id",
+      "horizontalOverflow": false,
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "hasDemoLabel": true,
+      "kpiCards": 4,
+      "navLinks": 13,
+      "h1": "Selamat pagi, Alex! 👋",
+      "foxiLoaded": true,
+      "imagesMissingAlt": 0,
+      "unnamedInteractive": 0,
+      "weeklySelection": true,
+      "mobileDialog": null,
+      "posEntry": true,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ok": true,
+      "screenshotPath": "D:\\PROJECTS\\FoxBitz\\docs\\screenshots\\dashboard-desktop-1440.png"
+    },
+    {
+      "viewport": "tablet-1024",
+      "status": 200,
+      "title": "FoxBiz — POS & Business Management System",
+      "htmlLang": "id",
+      "horizontalOverflow": false,
+      "pageWidth": 1024,
+      "clientWidth": 1024,
+      "hasDemoLabel": true,
+      "kpiCards": 4,
+      "navLinks": 13,
+      "h1": "Selamat pagi, Alex! 👋",
+      "foxiLoaded": true,
+      "imagesMissingAlt": 0,
+      "unnamedInteractive": 0,
+      "weeklySelection": true,
+      "mobileDialog": null,
+      "posEntry": true,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ok": true,
+      "screenshotPath": "D:\\PROJECTS\\FoxBitz\\docs\\screenshots\\dashboard-tablet-1024.png"
+    },
+    {
+      "viewport": "mobile-390",
+      "status": 200,
+      "title": "FoxBiz — POS & Business Management System",
+      "htmlLang": "id",
+      "horizontalOverflow": false,
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "hasDemoLabel": true,
+      "kpiCards": 4,
+      "navLinks": 13,
+      "h1": "Selamat pagi, Alex! 👋",
+      "foxiLoaded": true,
+      "imagesMissingAlt": 0,
+      "unnamedInteractive": 0,
+      "weeklySelection": true,
+      "mobileDialog": {
+        "opened": true,
+        "closedWithEscape": true
+      },
+      "posEntry": true,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ok": true,
+      "screenshotPath": "D:\\PROJECTS\\FoxBitz\\docs\\screenshots\\dashboard-mobile-390.png"
+    },
+    {
+      "viewport": "mobile-360",
+      "status": 200,
+      "title": "FoxBiz — POS & Business Management System",
+      "htmlLang": "id",
+      "horizontalOverflow": false,
+      "pageWidth": 360,
+      "clientWidth": 360,
+      "hasDemoLabel": true,
+      "kpiCards": 4,
+      "navLinks": 13,
+      "h1": "Selamat pagi, Alex! 👋",
+      "foxiLoaded": true,
+      "imagesMissingAlt": 0,
+      "unnamedInteractive": 0,
+      "weeklySelection": true,
+      "mobileDialog": {
+        "opened": true,
+        "closedWithEscape": true
+      },
+      "posEntry": true,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ok": true,
+      "screenshotPath": "D:\\PROJECTS\\FoxBitz\\docs\\screenshots\\dashboard-mobile-360.png"
+    }
+  ]
+}

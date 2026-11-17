@@ -1,0 +1,112 @@
+{
+  "verifiedAt": "2026-11-17T14:05:21.984Z",
+  "reports": [
+    {
+      "viewport": "desktop",
+      "createEditUniquePhone": true,
+      "searchSegmentFilter": true,
+      "emptyAndPaidProfile": true,
+      "optionalCustomerSelection": true,
+      "selectionReload": true,
+      "holdResumeCustomerLocked": true,
+      "lostResponseCustomerRecoverySingleSale": true,
+      "nameOnlyReceipt": true,
+      "checkoutWithoutCustomer": true,
+      "offlineRetry": true,
+      "closedProfileStaysClosed": true,
+      "overflow": {
+        "form": false,
+        "emptyProfile": false,
+        "posHold": false,
+        "receipt": false,
+        "profile": false,
+        "list": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "tablet",
+      "createEditUniquePhone": true,
+      "searchSegmentFilter": true,
+      "emptyAndPaidProfile": true,
+      "optionalCustomerSelection": true,
+      "selectionReload": true,
+      "holdResumeCustomerLocked": true,
+      "lostResponseCustomerRecoverySingleSale": true,
+      "nameOnlyReceipt": true,
+      "checkoutWithoutCustomer": true,
+      "offlineRetry": true,
+      "closedProfileStaysClosed": "checked on desktop",
+      "overflow": {
+        "form": false,
+        "emptyProfile": false,
+        "posHold": false,
+        "receipt": false,
+        "profile": false,
+        "list": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "mobile390",
+      "createEditUniquePhone": true,
+      "searchSegmentFilter": true,
+      "emptyAndPaidProfile": true,
+      "optionalCustomerSelection": true,
+      "selectionReload": true,
+      "holdResumeCustomerLocked": true,
+      "lostResponseCustomerRecoverySingleSale": true,
+      "nameOnlyReceipt": true,
+      "checkoutWithoutCustomer": true,
+      "offlineRetry": true,
+      "closedProfileStaysClosed": "checked on desktop",
+      "overflow": {
+        "form": false,
+        "emptyProfile": false,
+        "posHold": false,
+        "receipt": false,
+        "profile": false,
+        "list": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "mobile360",
+      "createEditUniquePhone": true,
+      "searchSegmentFilter": true,
+      "emptyAndPaidProfile": true,
+      "optionalCustomerSelection": true,
+      "selectionReload": true,
+      "holdResumeCustomerLocked": true,
+      "lostResponseCustomerRecoverySingleSale": true,
+      "nameOnlyReceipt": true,
+      "checkoutWithoutCustomer": true,
+      "offlineRetry": true,
+      "closedProfileStaysClosed": "checked on desktop",
+      "overflow": {
+        "form": false,
+        "emptyProfile": false,
+        "posHold": false,
+        "receipt": false,
+        "profile": false,
+        "list": false
+      },
+      "errors": []
+    },
+    {
+      "role": "viewer",
+      "permissionUI": true,
+      "cashierLookupWithoutCrmAccess": false
+    },
+    {
+      "role": "cashier",
+      "permissionUI": true,
+      "cashierLookupWithoutCrmAccess": true
+    },
+    {
+      "role": "none",
+      "permissionUI": true,
+      "cashierLookupWithoutCrmAccess": false
+    }
+  ]
+}

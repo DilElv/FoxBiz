@@ -1,0 +1,1 @@
+export default function Loading() { return <main aria-busy="true" aria-label="Memuat halaman" className="p-6"><p className="text-sm text-fox-secondary">Memuat halaman…</p><div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-4">{[0,1,2,3].map((key) => <div key={key} className="h-32 animate-pulse rounded-xl bg-fox-soft motion-reduce:animate-none"/>)}</div></main>; }

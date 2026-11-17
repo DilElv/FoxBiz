@@ -1,0 +1,89 @@
+{
+  "verifiedAt": "2026-11-16T21:04:21.013Z",
+  "reports": [
+    {
+      "viewport": "desktop",
+      "width": 1440,
+      "height": 900,
+      "login": true,
+      "productCreate": true,
+      "opening": true,
+      "threshold": true,
+      "outletSwitch": true,
+      "settings": true,
+      "userCreate": true,
+      "logout": true,
+      "overflowByPage": {
+        "login": false,
+        "products": false,
+        "inventory": false,
+        "settings": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "tablet",
+      "width": 1024,
+      "height": 768,
+      "login": true,
+      "productCreate": true,
+      "opening": true,
+      "threshold": true,
+      "outletSwitch": true,
+      "settings": true,
+      "userCreate": false,
+      "logout": true,
+      "overflowByPage": {
+        "login": false,
+        "products": false,
+        "inventory": false,
+        "settings": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "mobile390",
+      "width": 390,
+      "height": 844,
+      "login": true,
+      "productCreate": true,
+      "opening": true,
+      "threshold": true,
+      "outletSwitch": true,
+      "settings": true,
+      "userCreate": false,
+      "logout": true,
+      "overflowByPage": {
+        "login": false,
+        "products": false,
+        "inventory": false,
+        "settings": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "mobile360",
+      "width": 360,
+      "height": 800,
+      "login": true,
+      "productCreate": true,
+      "opening": true,
+      "threshold": true,
+      "outletSwitch": true,
+      "settings": true,
+      "userCreate": false,
+      "logout": true,
+      "overflowByPage": {
+        "login": false,
+        "products": false,
+        "inventory": false,
+        "settings": false
+      },
+      "errors": []
+    },
+    {
+      "permissionUI": true,
+      "protectedRedirect": true
+    }
+  ]
+}

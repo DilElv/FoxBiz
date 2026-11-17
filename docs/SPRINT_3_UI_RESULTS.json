@@ -1,0 +1,81 @@
+{
+  "verifiedAt": "2026-11-17T06:43:44.794Z",
+  "reports": [
+    {
+      "viewport": "desktop",
+      "adjustment": true,
+      "receiving": true,
+      "transferSend": true,
+      "transferReceive": true,
+      "lostResponseRecovery": true,
+      "movementHistory": true,
+      "mobileOutletSwitch": false,
+      "overflow": {
+        "balances": false,
+        "transfer": false,
+        "received": false,
+        "pending": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "tablet",
+      "adjustment": true,
+      "receiving": true,
+      "transferSend": true,
+      "transferReceive": true,
+      "lostResponseRecovery": true,
+      "movementHistory": true,
+      "mobileOutletSwitch": false,
+      "overflow": {
+        "balances": false,
+        "transfer": false,
+        "received": false,
+        "pending": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "mobile390",
+      "adjustment": true,
+      "receiving": true,
+      "transferSend": true,
+      "transferReceive": true,
+      "lostResponseRecovery": true,
+      "movementHistory": true,
+      "mobileOutletSwitch": true,
+      "overflow": {
+        "balances": false,
+        "transfer": false,
+        "received": false,
+        "pending": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "mobile360",
+      "adjustment": true,
+      "receiving": true,
+      "transferSend": true,
+      "transferReceive": true,
+      "lostResponseRecovery": true,
+      "movementHistory": true,
+      "mobileOutletSwitch": true,
+      "overflow": {
+        "balances": false,
+        "transfer": false,
+        "received": false,
+        "pending": false
+      },
+      "errors": []
+    },
+    {
+      "permissionUI": true,
+      "readOnlyViewer": true,
+      "documentActionsHidden": true
+    },
+    {
+      "noAccessUI": true
+    }
+  ]
+}

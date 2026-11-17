@@ -1,0 +1,11 @@
+{
+  "verifiedAt": "2026-11-17T11:29:50.759Z",
+  "smokeTenantId": "723b508f-0dee-4307-9f78-2c56d16f8db7",
+  "remainingTenants": 0,
+  "transactionCleanup": true,
+  "remainingFinanceFixtureTenants": 0,
+  "remainingFinanceFixtureSlugs": [],
+  "remainingFinanceAuditTriggers": [],
+  "remainingFinanceAuditFunctions": [],
+  "cleanupPass": true
+}

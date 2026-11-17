@@ -1,0 +1,96 @@
+{
+  "verifiedAt": "2026-11-17T18:35:54+07:00",
+  "sprint": 5,
+  "status": "pass",
+  "environment": {
+    "web": "Next.js production build served with next start at http://127.0.0.1:3000",
+    "api": "NestJS development server at http://127.0.0.1:4000",
+    "database": "PostgreSQL 17 at 127.0.0.1:55432, database foxbiz_sprint0",
+    "note": "Smoke Finance ran against the production web build, not the dev server."
+  },
+  "gates": {
+    "build": {
+      "status": "pass",
+      "web": true,
+      "api": true,
+      "log": ".local/sprint5-build-final.log"
+    },
+    "lint": {
+      "status": "pass",
+      "command": "npm run lint",
+      "maxWarnings": 0
+    },
+    "typecheck": {
+      "status": "pass",
+      "web": true,
+      "api": true
+    },
+    "unit": {
+      "status": "pass",
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "log": ".local/sprint5-unit-final.log"
+    },
+    "financeIntegration": {
+      "status": "pass",
+      "tests": 7,
+      "pass": 7,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "log": ".local/sprint5-finance-integration-final.log"
+    },
+    "fullIntegration": {
+      "status": "pass",
+      "tests": 48,
+      "pass": 48,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 348773.5051,
+      "log": ".local/sprint5-integration-final.log"
+    },
+    "uiSmoke": {
+      "status": "pass",
+      "viewports": ["desktop", "tablet", "mobile390", "mobile360"],
+      "roles": ["viewer", "writer", "voider", "none"],
+      "overflowDetected": false,
+      "consoleErrors": 0,
+      "offlineRecoveryMessageShown": true,
+      "results": "docs/SPRINT_5_UI_RESULTS.json",
+      "screenshots": "docs/screenshots/finance-*.png",
+      "log": ".local/sprint5-smoke-final.log"
+    },
+    "migration": {
+      "status": "pass",
+      "results": "docs/SPRINT_5_MIGRATION_RESULTS.json"
+    },
+    "database": {
+      "status": "pass",
+      "migrations": 6,
+      "schemaUpToDate": true
+    },
+    "cleanup": {
+      "status": "pass",
+      "remainingFinanceFixtureTenants": 0,
+      "remainingFinanceAuditTriggers": 0,
+      "remainingFinanceAuditFunctions": 0,
+      "results": "docs/SPRINT_5_CLEANUP_RESULTS.json"
+    },
+    "dependencyAudit": {
+      "status": "pass",
+      "vulnerabilities": 0
+    },
+    "prismaGenerate": {
+      "status": "pass",
+      "clientVersion": "6.19.3"
+    }
+  },
+  "scope": {
+    "operationalUat": "not performed",
+    "physicalDevices": "not tested",
+    "productionDeployment": "not performed",
+    "pixelPerfect": "not claimed"
+  }
+}

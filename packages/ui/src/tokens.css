@@ -1,0 +1,19 @@
+:root {
+  --foxbiz-primary: #1689ED;
+  --foxbiz-primary-hover: #0875D1;
+  --foxbiz-primary-soft: #E7F3FF;
+  --foxbiz-navy: #15213F;
+  --foxbiz-teal: #12B8C4;
+  --foxbiz-background: #F2FAFD;
+  --foxbiz-surface: #FFFFFF;
+  --foxbiz-border: #E3EDF4;
+  --foxbiz-text-secondary: #526176;
+  --foxbiz-text-muted: #5E6F84;
+  --foxbiz-success: #116B49;
+  --foxbiz-warning: #936006;
+  --foxbiz-danger: #C63D58;
+  --foxbiz-info: #166FB2;
+  --foxbiz-radius-control: 8px;
+  --foxbiz-radius-card: 12px;
+  --foxbiz-radius-panel: 16px;
+}

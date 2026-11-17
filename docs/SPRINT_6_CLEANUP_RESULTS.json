@@ -1,0 +1,10 @@
+{
+  "verifiedAt": "2026-11-17T14:44:37.747Z",
+  "smokeTenantId": "82842c99-99d4-41ab-9a09-cb16a3cfc000",
+  "remainingTenants": 0,
+  "transactionCleanup": true,
+  "remainingCrmAndPosFixtureTenants": 0,
+  "remainingCrmAuditTriggers": 0,
+  "remainingCrmAuditFunctions": 0,
+  "complete": true
+}

@@ -1,0 +1,97 @@
+{
+  "verifiedAt": "2026-11-17T11:23:06.931Z",
+  "reports": [
+    {
+      "viewport": "desktop",
+      "incomeExpense": true,
+      "decimalSummary": true,
+      "lostResponseReloadSameKeyRetry": true,
+      "singleEntryAudit": true,
+      "void": true,
+      "filters": true,
+      "invalidPeriod": true,
+      "emptyPeriod": true,
+      "outletSwitch": true,
+      "overflow": {
+        "form": false,
+        "pending": false,
+        "report": false,
+        "complete": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "tablet",
+      "incomeExpense": true,
+      "decimalSummary": true,
+      "lostResponseReloadSameKeyRetry": true,
+      "singleEntryAudit": true,
+      "void": true,
+      "filters": true,
+      "invalidPeriod": true,
+      "emptyPeriod": true,
+      "outletSwitch": true,
+      "overflow": {
+        "form": false,
+        "pending": false,
+        "report": false,
+        "complete": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "mobile390",
+      "incomeExpense": true,
+      "decimalSummary": true,
+      "lostResponseReloadSameKeyRetry": true,
+      "singleEntryAudit": true,
+      "void": true,
+      "filters": true,
+      "invalidPeriod": true,
+      "emptyPeriod": true,
+      "outletSwitch": true,
+      "overflow": {
+        "form": false,
+        "pending": false,
+        "report": false,
+        "complete": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "mobile360",
+      "incomeExpense": true,
+      "decimalSummary": true,
+      "lostResponseReloadSameKeyRetry": true,
+      "singleEntryAudit": true,
+      "void": true,
+      "filters": true,
+      "invalidPeriod": true,
+      "emptyPeriod": true,
+      "outletSwitch": true,
+      "overflow": {
+        "form": false,
+        "pending": false,
+        "report": false,
+        "complete": false
+      },
+      "errors": []
+    },
+    {
+      "role": "viewer",
+      "permissionUI": true
+    },
+    {
+      "role": "writer",
+      "permissionUI": true
+    },
+    {
+      "role": "voider",
+      "permissionUI": true
+    },
+    {
+      "role": "none",
+      "permissionUI": true
+    }
+  ]
+}

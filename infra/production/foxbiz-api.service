@@ -1,0 +1,24 @@
+[Unit]
+Description=FoxBiz production API
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=foxbiz
+Group=foxbiz
+WorkingDirectory=/opt/foxbiz/current
+EnvironmentFile=/etc/foxbiz/production.env
+ExecStart=/usr/bin/node apps/api/dist/main.js
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/foxbiz
+UMask=0027
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

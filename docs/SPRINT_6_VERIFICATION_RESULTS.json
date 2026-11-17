@@ -1,0 +1,105 @@
+{
+  "verifiedAt": "2026-11-17T14:51:15.611Z",
+  "sprint": 6,
+  "status": "pass",
+  "environment": {
+    "web": "Next.js production build at http://127.0.0.1:3000",
+    "api": "NestJS development server at http://127.0.0.1:4000",
+    "database": "PostgreSQL 17 at 127.0.0.1:55432, foxbiz_sprint0"
+  },
+  "gates": {
+    "build": {
+      "status": "pass",
+      "web": true,
+      "api": true,
+      "log": ".local/sprint6-build-final.log"
+    },
+    "lint": {
+      "status": "pass",
+      "maxWarnings": 0,
+      "log": ".local/sprint6-lint-final.log"
+    },
+    "typecheck": {
+      "status": "pass",
+      "web": true,
+      "api": true
+    },
+    "unit": {
+      "status": "pass",
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 125030.5003,
+      "log": ".local/sprint6-unit-final.log"
+    },
+    "fullIntegration": {
+      "status": "pass",
+      "tests": 54,
+      "pass": 54,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 641894.677,
+      "log": ".local/sprint6-integration-final.log"
+    },
+    "uiSmoke": {
+      "status": "pass",
+      "viewports": [
+        "desktop",
+        "tablet",
+        "mobile390",
+        "mobile360"
+      ],
+      "roles": [
+        "viewer",
+        "cashier",
+        "none"
+      ],
+      "overflowDetected": false,
+      "consoleErrors": 0,
+      "results": "docs/SPRINT_6_UI_RESULTS.json",
+      "log": ".local/sprint6-smoke-final.log"
+    },
+    "posRegression": {
+      "status": "pass",
+      "viewports": [
+        "desktop",
+        "tablet",
+        "mobile390",
+        "mobile360"
+      ],
+      "log": ".local/sprint6-pos-regression-final.log",
+      "results": "docs/SPRINT_6_POS_REGRESSION_RESULTS.json"
+    },
+    "migration": {
+      "status": "pass",
+      "results": "docs/SPRINT_6_MIGRATION_RESULTS.json"
+    },
+    "database": {
+      "status": "pass",
+      "migrations": 7,
+      "schemaUpToDate": true
+    },
+    "cleanup": {
+      "status": "pass",
+      "results": "docs/SPRINT_6_CLEANUP_RESULTS.json"
+    },
+    "dependencyAudit": {
+      "status": "pass",
+      "vulnerabilities": 0
+    },
+    "prismaGenerate": {
+      "status": "pass",
+      "clientVersion": "6.19.3"
+    }
+  },
+  "scope": {
+    "operationalUat": "not performed",
+    "physicalDevices": "not tested",
+    "productionDeployment": "not performed",
+    "pixelPerfect": "not claimed",
+    "productionScalePerformance": "not measured"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "verifiedAt": "2026-11-17T12:43:40.290Z",
+  "applied": true,
+  "ownerUpgrade": true,
+  "defaultManagerUpgrade": true,
+  "customizedRolesPreserved": true,
+  "inventoryCashierUnchanged": true,
+  "repeatableUpgrade": true,
+  "databaseConstraints": true,
+  "optionalCustomerColumns": true,
+  "uniqueTenantPhoneIndex": true,
+  "method": "Exact migration role UPDATE statements on a transaction-local temporary table; actual roles unchanged. PostgreSQL catalogs checked for constraints, nullable columns and unique index."
+}

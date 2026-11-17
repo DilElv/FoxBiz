@@ -1,0 +1,76 @@
+{
+  "verifiedAt": "2026-11-17T13:09:11.751Z",
+  "reports": [
+    {
+      "viewport": "desktop",
+      "categoryFilter": true,
+      "barcodeSearch": true,
+      "cash": true,
+      "manualEdc": true,
+      "holdResume": true,
+      "historyReprint": true,
+      "lostResponseRecovery": true,
+      "overflow": {
+        "cart": false,
+        "cash": false,
+        "receipt": false,
+        "edc": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "tablet",
+      "categoryFilter": true,
+      "barcodeSearch": true,
+      "cash": true,
+      "manualEdc": true,
+      "holdResume": true,
+      "historyReprint": true,
+      "lostResponseRecovery": true,
+      "overflow": {
+        "cart": false,
+        "cash": false,
+        "receipt": false,
+        "edc": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "mobile390",
+      "categoryFilter": true,
+      "barcodeSearch": true,
+      "cash": true,
+      "manualEdc": true,
+      "holdResume": true,
+      "historyReprint": true,
+      "lostResponseRecovery": true,
+      "overflow": {
+        "cart": false,
+        "cash": false,
+        "receipt": false,
+        "edc": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "mobile360",
+      "categoryFilter": true,
+      "barcodeSearch": true,
+      "cash": true,
+      "manualEdc": true,
+      "holdResume": true,
+      "historyReprint": true,
+      "lostResponseRecovery": true,
+      "overflow": {
+        "cart": false,
+        "cash": false,
+        "receipt": false,
+        "edc": false
+      },
+      "errors": []
+    },
+    {
+      "permissionUI": true
+    }
+  ]
+}

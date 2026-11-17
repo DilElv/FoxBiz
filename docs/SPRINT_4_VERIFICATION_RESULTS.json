@@ -1,0 +1,26 @@
+{
+  "verifiedAt": "2026-11-17T09:09:12.710Z",
+  "scope": "Sprint 4 local quality gates; operational UAT and production deployment remain separate",
+  "unit": { "passed": 2, "failed": 0 },
+  "integration": {
+    "passed": 41,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "topLevelTests": 5,
+    "durationMs": 362641.2639,
+    "log": ".local/sprint4-integration-final.log"
+  },
+  "typecheck": { "web": "PASS", "api": "PASS" },
+  "lint": "PASS",
+  "build": { "web": "PASS", "api": "PASS" },
+  "database": { "status": "up-to-date", "migrations": 5 },
+  "purchasingUI": {
+    "status": "PASS",
+    "viewports": ["1440x900", "1024x768", "390x844", "360x800"],
+    "permissionRoles": ["viewer", "none", "receiver"],
+    "results": "docs/SPRINT_4_UI_RESULTS.json"
+  },
+  "cleanup": { "status": "PASS", "results": "docs/SPRINT_4_CLEANUP_RESULTS.json" },
+  "localServices": { "webLoginHttpStatus": 200, "apiHealth": "ok", "apiDatabase": "connected" }
+}

@@ -1,0 +1,10 @@
+{
+  "verifiedAt": "2026-11-17T07:29:04.139Z",
+  "applied": true,
+  "ownerUpgrade": true,
+  "defaultManagerUpgrade": true,
+  "defaultInventoryReadReceiveOnly": true,
+  "customizedRolesPreserved": true,
+  "cashierUnchanged": true,
+  "method": "Exact migration UPDATE statements against transaction-local temporary roles table; actual role data unchanged."
+}
