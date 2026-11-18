@@ -34,6 +34,19 @@
 - **Finance**: laporan kas memilih outlet dan periode. Pemasukan/pengeluaran manual harus memakai kategori, tanggal, nominal, dan catatan yang sesuai. Koreksi entri tercatat dilakukan dengan void beralasan; transaksi POS tidak dicatat ulang sebagai pemasukan.
 - **CRM**: tambahkan pelanggan dengan nama dan telepon unik per bisnis. Email dan catatan opsional. Buka profil untuk melihat segmen dan transaksi pada outlet yang diizinkan. Jangan menyimpan informasi sensitif yang tidak dibutuhkan pada catatan.
 
+## HRIS dan absensi
+
+1. Buka **HRIS**, tab **Karyawan**, lalu tambahkan karyawan dengan nama, kode unik, jabatan, telepon, dan PIN 6 digit. Karyawan tidak memerlukan akun login terpisah.
+2. Atur akses outlet karyawan. Pilihan **akses seluruh outlet** otomatis mencakup outlet baru yang dibuat kemudian.
+3. Buka tab **Kiosk Absensi**, pilih outlet, lalu pilih nama karyawan. Karyawan memasukkan PIN dan mengambil foto masuk atau pulang. Foto wajib; server menambahkan watermark berisi nama bisnis, outlet, nama/kode karyawan, jenis absen, waktu server, ID absensi, dan GPS bila diizinkan.
+4. Satu perangkat kiosk boleh dipakai bergantian oleh banyak karyawan pada akun pengelola yang sama. Kasir POS tetap memakai akun pengguna sendiri dan tidak otomatis menjadi karyawan kiosk.
+5. Tab **Rekap & Ekspor** menampilkan rekap harian (termasuk karyawan yang belum absen) dan rekap bulanan. Unduh foto JPG dari tautan foto atau rekap PDF dari tombol Unduh PDF.
+6. Foto absensi disimpan maksimal 180 hari. Setelah itu file foto dibersihkan otomatis oleh timer server, sedangkan metadata absensi tetap tersimpan untuk laporan. Unduh JPG atau PDF sebelum masa retensi berakhir bila diperlukan.
+
+## Dashboard
+
+Dashboard menampilkan data aktual outlet yang dipilih: penjualan, transaksi, item terjual, pelanggan baru, grafik penjualan, stok menipis, PO menunggu, dan status absensi hari ini. Angka dan peringatan mengikuti izin peran Anda; peran tanpa izin POS tidak melihat ringkasan penjualan, dan peran tanpa izin HRIS tidak melihat status absensi.
+
 ## Hak akses dan keamanan akun
 
 - Owner/manager mengelola data sesuai permission; viewer hanya membaca; kasir menjalankan POS dan pencarian pelanggan tanpa akses halaman CRM.
@@ -43,7 +56,7 @@
 
 ## Kondisi awal dan batasan
 
-Database production awalnya hanya berisi tenant `foxbiz`. Setiap bisnis baru dibuat tanpa produk, pelanggan, atau transaksi demo dan hanya berisi akun owner, role bawaan, serta outlet `Toko Utama`. Admin perlu menambah produk dan saldo awal stok sebelum kasir dapat bertransaksi. Sistem belum mencakup settlement EDC otomatis, perangkat printer khusus yang tervalidasi, refund pascalunas, loyalty, atau integrasi WhatsApp. Uji operasional toko nyata dan perangkat fisik belum dilakukan.
+Database production awalnya hanya berisi tenant `foxbiz`. Setiap bisnis baru dibuat tanpa produk, pelanggan, atau transaksi demo dan hanya berisi akun owner, role bawaan, serta outlet `Toko Utama`. Admin perlu menambah produk dan saldo awal stok sebelum kasir dapat bertransaksi. Sistem belum mencakup settlement EDC otomatis, perangkat printer khusus yang tervalidasi, refund pascalunas, loyalty, integrasi WhatsApp, penggajian/lembur HRIS, atau verifikasi wajah. Uji operasional toko nyata dan perangkat fisik belum dilakukan.
 
 ## Bantuan admin
 

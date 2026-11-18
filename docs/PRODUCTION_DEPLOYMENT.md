@@ -1,6 +1,6 @@
 # Deployment FoxBiz — foxbiz.bikinsaas.com
 
-Target rilis: source Sprint 0–6, versi aplikasi `0.1.0`. Poin 7–8 dalam rencana percakapan berarti deployment dan dokumentasi rilis; bukan implementasi modul fitur Sprint 7/8 pada backlog produk. Backup dan staging dilewati atas arahan pengguna.
+Target rilis: source Sprint 0–7, versi aplikasi `0.1.0`. Sprint 7 menambahkan HRIS: karyawan, kiosk absensi PIN, foto ber-watermark, rekap harian/bulanan, dan retensi foto 180 hari. Backup dan staging awal dilewati atas arahan pengguna; rilis Sprint 7 membuat backup database production sebelum migrasi dijalankan.
 
 ## Infrastruktur
 
@@ -8,19 +8,21 @@ Target rilis: source Sprint 0–6, versi aplikasi `0.1.0`. Poin 7–8 dalam renc
 - Domain: `foxbiz.bikinsaas.com`; record A harus menunjuk ke IP host di DNS Rumahweb.
 - Web: `127.0.0.1:3500`, API: `127.0.0.1:4500`; diakses melalui Nginx dan proxy same-origin Next.js.
 - Database terpisah: `foxbiz_production`, role `foxbiz_app`, PostgreSQL 16 lokal port 5432. Gate development memakai PostgreSQL 17; kompatibilitas production harus dikonfirmasi lewat migrasi dan smoke host aktual.
-- Release: `/opt/foxbiz/releases/sprint6-20261118`, symlink aktif `/opt/foxbiz/current`.
+- Release: `/opt/foxbiz/releases/sprint7-20261118`, symlink aktif `/opt/foxbiz/current`.
 - Service: `foxbiz-api.service` dan `foxbiz-web.service`, user sistem `foxbiz`, restart otomatis saat gagal.
-- Konfigurasi privat: `/etc/foxbiz/production.env` (root:foxbiz, mode 640). Jangan salin ke Git.
+- Foto absensi: `/var/lib/foxbiz/attendance`, dibuat oleh `StateDirectory=foxbiz/attendance` dan diizinkan `ReadWritePaths`. Foto disimpan maksimal 180 hari oleh timer `foxbiz-attendance-purge.timer` (02.15, toleransi acak 5 menit).
+- Konfigurasi privat: `/etc/foxbiz/production.env` (root:foxbiz, mode 640). Jangan salin ke Git. Wajib memuat `ATTENDANCE_DIR=/var/lib/foxbiz/attendance` dan `ATTENDANCE_RETENTION_DAYS=180`.
 
 ## Urutan rilis
 
 1. Periksa situs aktif, resource, port dan konflik direktori; gunakan database/service FoxBiz tersendiri.
-2. Upload source tanpa `.env`, `.local`, dependency/build lokal, lalu `npm ci --include=dev` di host Linux.
-3. Generate Prisma, build web/API, jalankan `npm run db:migrate` lalu `npm run db:status` dengan environment production.
-4. Jalankan `scripts/bootstrap-production.cjs` secara eksplisit dengan `FOXBIZ_BOOTSTRAP_FILE` privat. Skrip menolak tenant yang sudah ada, membuat owner/role/outlet tanpa produk atau transaksi demo.
-5. Aktifkan symlink dan service; periksa API langsung serta halaman web lokal.
-6. Pasang virtual host HTTP hanya untuk ACME. Setelah DNS benar, terbitkan sertifikat Let's Encrypt, pasang konfigurasi HTTPS dan jalankan `nginx -t` sebelum reload.
-7. Jalankan smoke production pada tenant fixture tersendiri, verifikasi cleanup, dan periksa status service/log. Tidak ada UAT operasional atau uji perangkat fisik dalam rilis ini.
+2. Buat backup database production sebelum migrasi: `pg_dump -Fc` ke `/var/backups/foxbiz/` dan verifikasi file dapat dibaca. Jangan menjalankan migrasi tanpa backup yang selesai.
+3. Upload source tanpa `.env`, `.local`, dependency/build lokal, lalu `npm ci --include=dev` di host Linux.
+4. Generate Prisma, build web/API, jalankan `npm run db:migrate` lalu `npm run db:status` dengan environment production.
+5. Jalankan `scripts/bootstrap-production.cjs` secara eksplisit dengan `FOXBIZ_BOOTSTRAP_FILE` privat. Skrip menolak tenant yang sudah ada, membuat owner/role/outlet tanpa produk atau transaksi demo.
+6. Aktifkan symlink dan service; pastikan `foxbiz-attendance-purge.timer` aktif, lalu periksa API langsung serta halaman web lokal.
+7. Pasang virtual host HTTP hanya untuk ACME. Setelah DNS benar, terbitkan sertifikat Let's Encrypt, pasang konfigurasi HTTPS dan jalankan `nginx -t` sebelum reload. Nginx mengizinkan unggahan 8 MB agar foto absensi 5 MB dapat lewat proxy.
+8. Jalankan smoke production pada tenant fixture tersendiri, verifikasi cleanup, unggah foto absensi, unduh JPG/PDF, dan periksa status service/log. Tidak ada UAT operasional atau uji perangkat fisik dalam rilis ini.
 
 Template service dan Nginx ada di `infra/production/`. Template HTTP mengembalikan 503 sampai HTTPS siap. Jangan aktifkan template HTTPS sebelum sertifikat tersedia. Pengujian aplikasi sebelum propagasi DNS dapat menggunakan override resolusi klien; ini bukan bukti domain publik sudah aktif.
 
@@ -28,18 +30,21 @@ Template service dan Nginx ada di `infra/production/`. Template HTTP mengembalik
 
 ```bash
 systemctl status foxbiz-api foxbiz-web --no-pager
+systemctl status foxbiz-attendance-purge.timer --no-pager
 journalctl -u foxbiz-api -u foxbiz-web --since '15 minutes ago' --no-pager
+journalctl -u foxbiz-attendance-purge --since '7 days ago' --no-pager
 curl --fail http://127.0.0.1:4500/api/v1/health
 curl --fail https://foxbiz.bikinsaas.com/healthz
 nginx -t
 systemctl status certbot.timer --no-pager
+pg_dump -Fc foxbiz_production > /var/backups/foxbiz/foxbiz_production-$(date +%Y%m%d-%H%M).dump
 ```
 
-Nginx menulis `/var/log/nginx/foxbiz-access.log` dan `/var/log/nginx/foxbiz-error.log`; service menulis journal. Ini menyediakan log lokal dan pemulihan proses, belum termasuk layanan alert eksternal. Certbot harus memiliki renewal hook untuk reload Nginx sesudah sertifikat diperbarui.
+Nginx menulis `/var/log/nginx/foxbiz-access.log` dan `/var/log/nginx/foxbiz-error.log`; service menulis journal. Timer purge menjalankan `apps/api/scripts/purge-attendance.cjs` setiap hari dan hanya menghapus file foto, bukan metadata absensi. Ini menyediakan log lokal dan pemulihan proses, belum termasuk layanan alert eksternal. Certbot harus memiliki renewal hook untuk reload Nginx sesudah sertifikat diperbarui.
 
 ## Penghentian dan pemulihan
 
-Rilis pertama belum memiliki versi production sebelumnya. Jika smoke gagal, hentikan service FoxBiz atau tampilkan maintenance pada virtual host FoxBiz; jangan menyentuh service/database aplikasi lain. Untuk rilis berikutnya, symlink dapat dikembalikan ke release sebelumnya setelah kompatibilitas schema diperiksa. Migrasi SQL tidak otomatis dibalik. Backup tidak dibuat pada rilis ini atas arahan pengguna, sehingga pemulihan data sebelum migrasi tidak tersedia dari proses deployment ini.
+Rilis Sprint 7 menyimpan backup database production sebelum migrasi di `/var/backups/foxbiz/`. Jika smoke gagal, hentikan service FoxBiz atau tampilkan maintenance pada virtual host FoxBiz; jangan menyentuh service/database aplikasi lain. Symlink dapat dikembalikan ke release sebelumnya setelah kompatibilitas schema diperiksa. Migrasi SQL tidak otomatis dibalik; pemulihan penuh memerlukan restore backup dan penghentian aplikasi yang menulis ke database.
 
 ## Status
 

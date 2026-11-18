@@ -11,15 +11,16 @@ export const PERMISSIONS = [
   'pos.checkout', 'pos.edc.confirm', 'pos.hold',
   'inventory.adjust', 'inventory.receive', 'inventory.transfer.send', 'inventory.transfer.receive',
   'purchasing.read', 'purchasing.suppliers.write', 'purchasing.orders.write', 'purchasing.orders.order', 'purchasing.orders.cancel', 'purchasing.receive',
+  'hris.read', 'hris.employees.write', 'hris.attendance.kiosk', 'hris.attendance.manage',
 ] as const;
 export type Permission = typeof PERMISSIONS[number];
 export const RequirePermission = (permission: Permission) => SetMetadata('permission', permission);
 export const DEFAULT_ROLES = [
   { code: 'owner', name: 'Business Owner', permissions: [...PERMISSIONS] },
-  { code: 'manager', name: 'Admin / Manager', permissions: ['finance.read', 'finance.entries.write', 'finance.void', 'crm.read', 'crm.customers.write', 'organization.read', 'catalog.read', 'catalog.write', 'inventory.read', 'inventory.opening', 'inventory.threshold', 'pos.read', 'pos.checkout', 'pos.edc.confirm', 'pos.hold', 'inventory.adjust', 'inventory.receive', 'inventory.transfer.send', 'inventory.transfer.receive', 'purchasing.read', 'purchasing.suppliers.write', 'purchasing.orders.write', 'purchasing.orders.order', 'purchasing.orders.cancel', 'purchasing.receive'] },
+  { code: 'manager', name: 'Admin / Manager', permissions: ['finance.read', 'finance.entries.write', 'finance.void', 'crm.read', 'crm.customers.write', 'organization.read', 'catalog.read', 'catalog.write', 'inventory.read', 'inventory.opening', 'inventory.threshold', 'pos.read', 'pos.checkout', 'pos.edc.confirm', 'pos.hold', 'inventory.adjust', 'inventory.receive', 'inventory.transfer.send', 'inventory.transfer.receive', 'purchasing.read', 'purchasing.suppliers.write', 'purchasing.orders.write', 'purchasing.orders.order', 'purchasing.orders.cancel', 'purchasing.receive', 'hris.read', 'hris.employees.write', 'hris.attendance.kiosk', 'hris.attendance.manage'] },
   { code: 'cashier', name: 'Cashier', permissions: ['catalog.read', 'inventory.read', 'pos.read', 'pos.checkout', 'pos.edc.confirm', 'pos.hold'] },
   { code: 'inventory', name: 'Inventory Staff', permissions: ['catalog.read', 'catalog.write', 'inventory.read', 'inventory.opening', 'inventory.threshold', 'inventory.adjust', 'inventory.receive', 'inventory.transfer.send', 'inventory.transfer.receive', 'purchasing.read', 'purchasing.receive'] },
-  { code: 'hr', name: 'HR Staff', permissions: [] },
+  { code: 'hr', name: 'HR Staff', permissions: ['hris.read', 'hris.employees.write', 'hris.attendance.kiosk', 'hris.attendance.manage'] },
   { code: 'employee', name: 'Employee', permissions: [] },
 ];
 

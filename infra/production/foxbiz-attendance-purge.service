@@ -1,0 +1,19 @@
+[Unit]
+Description=FoxBiz attendance photo retention purge
+After=network.target postgresql.service
+
+[Service]
+Type=oneshot
+User=foxbiz
+Group=foxbiz
+WorkingDirectory=/opt/foxbiz/current
+EnvironmentFile=/etc/foxbiz/production.env
+ExecStart=/usr/bin/node apps/api/scripts/purge-attendance.cjs
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/foxbiz/attendance
+UMask=0027
+StandardOutput=journal
+StandardError=journal

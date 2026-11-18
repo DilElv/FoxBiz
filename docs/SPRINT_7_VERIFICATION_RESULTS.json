@@ -1,0 +1,74 @@
+{
+  "verifiedAt": "2026-11-18T21:15:00+07:00",
+  "unit": { "passed": 3, "failed": 0 },
+  "integration": {
+    "passed": 64,
+    "failed": 0,
+    "suites": {
+      "tenant": 7,
+      "sprint1": 8,
+      "pos": 9,
+      "stock": 8,
+      "purchasing": 9,
+      "finance": 7,
+      "crm": 6,
+      "hris": 6,
+      "dashboard": 4
+    },
+    "execution": "one file at a time; multi-file runner hangs in this environment"
+  },
+  "lint": "pass",
+  "typecheck": "pass",
+  "webBuild": "pass",
+  "apiBuild": "pass",
+  "migration": {
+    "status": "pass",
+    "name": "20261118103815_sprint7_hris",
+    "total": 8,
+    "database": "foxbiz_production",
+    "schemaUpToDate": true
+  },
+  "backup": {
+    "status": "pass",
+    "file": "/var/backups/foxbiz/foxbiz_production-20261118-192002.dump",
+    "bytes": 168534,
+    "verifiedWith": "pg_restore -l",
+    "localCopy": ".local/foxbiz_production-20261118-192002.dump"
+  },
+  "productionSmoke": {
+    "status": "pass",
+    "checks": 15,
+    "url": "https://foxbiz.bikinsaas.com",
+    "items": [
+      "owner login through same-origin proxy",
+      "session and outlet retrieval",
+      "real dashboard summary and series",
+      "employee creation with hidden PIN hash",
+      "kiosk listing for new employee",
+      "clock-in with mandatory watermarked photo and GPS",
+      "daily recap includes attendance",
+      "authenticated JPG download",
+      "daily recap PDF export",
+      "clock-out with photo and duration",
+      "tenant-scoped API responses"
+    ]
+  },
+  "watermark": {
+    "status": "pass",
+    "brightPixels": 3636,
+    "distinctColors": 4441,
+    "file": ".local/sprint7-watermark.jpg"
+  },
+  "retention": {
+    "status": "pass",
+    "unit": "foxbiz-attendance-purge.service",
+    "result": "success",
+    "removedFiles": 0,
+    "timerEnabled": true
+  },
+  "cleanup": {
+    "fixtureEmployees": 0,
+    "fixtureAttendances": 0,
+    "fixturePhotos": 0
+  }
+}

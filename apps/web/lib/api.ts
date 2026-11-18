@@ -11,5 +11,15 @@ export async function api<T>(path: string, options: { method?: 'GET' | 'POST' | 
   }
   return body as T;
 }
+export async function apiUpload<T>(path: string, body: FormData): Promise<T> {
+  const response = await fetch(`/api/v1/${path}`, { method: 'POST', body, credentials: 'same-origin', cache: 'no-store' });
+  const result = await response.json().catch(() => null);
+  if (!response.ok) {
+    if (response.status === 401 && typeof window !== 'undefined') window.location.assign('/login');
+    const message = result?.error?.message;
+    throw new ApiError(response.status, Array.isArray(message) ? message.join(' · ') : message ?? 'Permintaan gagal.');
+  }
+  return result as T;
+}
 export type CurrentUser = { id: string; tenantId: string; tenantName: string; name: string; email: string; role: { id: string; code: string; name: string } | null; permissions: string[]; allOutlets: boolean; outletIds: string[] };
 export type Outlet = { id: string; name: string; code: string; address?: string; status?: string };

@@ -30,6 +30,8 @@ model Tenant {
   purchaseOrders PurchaseOrder[]
   financeEntries FinanceEntry[]
   customers Customer[]
+  employees Employee[]
+  attendances Attendance[]
   @@unique([id, slug])
   @@map("tenants")
 }
@@ -51,6 +53,8 @@ model Outlet {
   incomingTransfers StockDocument[] @relation("StockDestination")
   purchaseOrders PurchaseOrder[]
   financeEntries FinanceEntry[]
+  employees EmployeeOutlet[]
+  attendances Attendance[]
   @@unique([tenantId, id])
   @@unique([tenantId, code])
   @@index([tenantId, status])
@@ -228,6 +232,68 @@ model UserOutlet {
   outlet Outlet @relation(fields: [tenantId, outletId], references: [tenantId, id])
   @@id([tenantId, userId, outletId])
   @@map("user_outlets")
+}
+
+model Employee {
+  id         String   @id @default(uuid()) @db.Uuid
+  tenantId   String   @map("tenant_id") @db.Uuid
+  code       String
+  name       String
+  position   String   @default("")
+  phone      String   @default("")
+  status     String   @default("active")
+  pinHash    String?  @map("pin_hash")
+  allOutlets Boolean  @default(true) @map("all_outlets")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at")
+  tenant     Tenant   @relation(fields: [tenantId], references: [id])
+  outlets    EmployeeOutlet[]
+  attendances Attendance[]
+  @@unique([tenantId, id])
+  @@unique([tenantId, code])
+  @@index([tenantId, status, name])
+  @@map("employees")
+}
+
+model EmployeeOutlet {
+  tenantId   String @map("tenant_id") @db.Uuid
+  employeeId String @map("employee_id") @db.Uuid
+  outletId   String @map("outlet_id") @db.Uuid
+  employee   Employee @relation(fields: [tenantId, employeeId], references: [tenantId, id])
+  outlet     Outlet   @relation(fields: [tenantId, outletId], references: [tenantId, id])
+  @@id([tenantId, employeeId, outletId])
+  @@map("employee_outlets")
+}
+
+model Attendance {
+  id               String    @id @default(uuid()) @db.Uuid
+  tenantId         String    @map("tenant_id") @db.Uuid
+  employeeId       String    @map("employee_id") @db.Uuid
+  outletId         String    @map("outlet_id") @db.Uuid
+  workDate         String    @map("work_date") @db.VarChar(10)
+  clockInAt        DateTime  @map("clock_in_at")
+  clockOutAt       DateTime? @map("clock_out_at")
+  clockInPhoto     String?   @map("clock_in_photo")
+  clockOutPhoto    String?   @map("clock_out_photo")
+  clockInPhotoHash  String?  @map("clock_in_photo_hash")
+  clockOutPhotoHash String?  @map("clock_out_photo_hash")
+  clockInLatitude  Float?    @map("clock_in_latitude")
+  clockInLongitude Float?    @map("clock_in_longitude")
+  clockInAccuracy  Float?    @map("clock_in_accuracy")
+  clockOutLatitude  Float?   @map("clock_out_latitude")
+  clockOutLongitude Float?   @map("clock_out_longitude")
+  clockOutAccuracy  Float?   @map("clock_out_accuracy")
+  source           String    @default("kiosk")
+  recordedBy       String    @map("recorded_by") @db.Uuid
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @default(now()) @updatedAt @map("updated_at")
+  tenant           Tenant    @relation(fields: [tenantId], references: [id])
+  employee         Employee  @relation(fields: [tenantId, employeeId], references: [tenantId, id])
+  outlet           Outlet    @relation(fields: [tenantId, outletId], references: [tenantId, id])
+  @@unique([tenantId, employeeId, workDate])
+  @@index([tenantId, outletId, workDate])
+  @@index([tenantId, employeeId, clockOutAt])
+  @@map("attendances")
 }
 
 model Category {

@@ -15,7 +15,10 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=true
-ReadWritePaths=/opt/foxbiz
+StateDirectory=foxbiz/attendance
+CacheDirectory=foxbiz
+Environment=XDG_CACHE_HOME=/var/cache/foxbiz
+ReadWritePaths=/opt/foxbiz /var/lib/foxbiz/attendance
 UMask=0027
 StandardOutput=journal
 StandardError=journal

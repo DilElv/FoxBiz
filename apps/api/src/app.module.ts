@@ -23,10 +23,15 @@ import { FinanceController } from './finance.controller';
 import { FinanceService } from './finance.service';
 import { CrmController } from './crm.controller';
 import { CrmService } from './crm.service';
+import { HrisController } from './hris.controller';
+import { HrisService } from './hris.service';
+import { AttendancePhotoService } from './attendance-photo.service';
+import { DashboardController } from './dashboard.controller';
+import { DashboardService } from './dashboard.service';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true, cache: true, envFilePath: [resolve(process.cwd(), '.env'), resolve(process.cwd(), '../../.env')], validate: validateEnvironment })],
-  controllers: [HealthController, AuthController, Sprint1Controller, PosController, StockController, PurchasingController, FinanceController, CrmController],
-  providers: [PrismaService, AuthService, AuthGuard, PermissionGuard, IdentityService, OrganizationService, CatalogService, InventoryService, PosService, StockService, PurchasingService, FinanceService, CrmService],
+  controllers: [HealthController, AuthController, Sprint1Controller, PosController, StockController, PurchasingController, FinanceController, CrmController, HrisController, DashboardController],
+  providers: [PrismaService, AuthService, AuthGuard, PermissionGuard, IdentityService, OrganizationService, CatalogService, InventoryService, PosService, StockService, PurchasingService, FinanceService, CrmService, HrisService, AttendancePhotoService, DashboardService],
 })
 export class AppModule {}
