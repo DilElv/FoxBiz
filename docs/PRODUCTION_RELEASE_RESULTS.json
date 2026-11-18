@@ -1,5 +1,5 @@
 {
-  "verifiedAt": "2026-11-18T03:47:44+07:00",
+  "verifiedAt": "2026-11-18T15:15:00+07:00",
   "applicationVersion": "0.1.0",
   "sourceCommit": "cf130c4f6bc15893db9d76db46367e0a2bfedd1f",
   "target": {
@@ -9,7 +9,7 @@
     "node": "20.20.2",
     "postgresql": "16"
   },
-  "status": "partially_deployed_waiting_for_public_dns",
+  "status": "deployed_public_https_verified",
   "backup": "not_performed_as_requested",
   "staging": "not_used_as_requested",
   "gates": {
@@ -43,15 +43,41 @@
         "logout revokes session"
       ]
     },
-    "publicDns": "pending_user_dns_record",
-    "httpsCertificate": "pending_public_dns",
-    "publicSmoke": "pending_https"
+    "publicDns": {
+      "status": "pass",
+      "record": "A foxbiz -> 203.194.115.231",
+      "verifiedVia": "Google Public DNS and server resolution"
+    },
+    "httpsCertificate": {
+      "status": "pass",
+      "issuer": "Let's Encrypt",
+      "domain": "foxbiz.bikinsaas.com",
+      "notAfter": "2027-02-16"
+    },
+    "certbotRenewalDryRun": "pass",
+    "publicSmoke": {
+      "status": "pass",
+      "url": "https://foxbiz.bikinsaas.com",
+      "checks": [
+        "HTTP redirects to HTTPS",
+        "public login page renders with HSTS",
+        "public health reports database connected",
+        "anonymous session rejected",
+        "foreign origin rejected",
+        "owner login with Secure/HttpOnly/SameSite cookie",
+        "owner session and outlet retrieval",
+        "CRM customer list",
+        "Finance metadata",
+        "POS product and customer lookup",
+        "logout revokes session"
+      ]
+    }
   },
   "runtime": {
     "webPort": "127.0.0.1:3500",
     "apiPort": "127.0.0.1:4500",
-    "httpVirtualHost": "enabled; returns 503 until TLS is configured",
-    "httpsVirtualHost": "not_enabled"
+    "httpVirtualHost": "enabled; redirects to HTTPS",
+    "httpsVirtualHost": "enabled"
   },
   "bootstrap": {
     "tenantSlug": "foxbiz",
@@ -60,7 +86,6 @@
     "demoProductsOrTransactions": false
   },
   "limits": [
-    "Public DNS returns NXDOMAIN; public HTTPS and domain smoke remain unverified",
     "Server permits root SSH login and password authentication",
     "Other applications listen on wildcard interfaces at ports 3100 and 3101; access controls require review",
     "Password rotation is available through the administrator API, not the current UI",

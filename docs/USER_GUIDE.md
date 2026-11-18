@@ -2,7 +2,7 @@
 
 ## Masuk
 
-1. Buka `https://foxbiz.bikinsaas.com/login` setelah DNS dan sertifikat HTTPS aktif.
+1. Buka `https://foxbiz.bikinsaas.com/login`.
 2. Masukkan kode bisnis `foxbiz`, email owner, dan password dari file kredensial privat yang diberikan administrator.
 3. Simpan file kredensial di tempat privat. UI saat ini belum menyediakan penggantian password; minta administrator merotasi password secara aman sebelum akun dipakai rutin. Jangan gunakan ulang password di layanan lain atau mengirim kredensial di grup/chat publik.
 

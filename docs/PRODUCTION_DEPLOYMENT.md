@@ -49,7 +49,8 @@ Status runtime per 18 November 2026:
 - Ketujuh migrasi berhasil diterapkan pada database baru `foxbiz_production`; `db:status` menyatakan schema up to date.
 - Tenant `foxbiz`, akun owner, role bawaan dan outlet MAIN dibuat tanpa data demo transaksi/produk. Kredensial awal disimpan root-only di `/etc/foxbiz/initial-owner.json`; salinan lokal privat berada di `.local/foxbiz-owner-credentials.json` dan diabaikan Git. Rotasi password dilakukan administrator melalui API karena UI belum mendukungnya; pembaruan pengguna mencabut sesi pengguna tersebut.
 - `foxbiz-api.service` dan `foxbiz-web.service` aktif; health API menyatakan database connected. Pengujian lokal melalui proxy lulus untuk login, cookie Secure/HttpOnly, session, CRM list, Finance metadata, POS products/customer lookup, serta logout/revocation. Foreign-origin ditolak 403 setelah perbaikan proxy.
-- Uji akhir melalui HTTPS publik belum dapat dilakukan. Saat diperiksa, `foxbiz.bikinsaas.com` belum resolve pada resolver publik; Nginx masih menyajikan 503 pada HTTP untuk host ini. Tambahkan DNS A `foxbiz` → `203.194.115.231`, lalu terbitkan sertifikat dan aktifkan konfigurasi HTTPS.
+- Situs publik aktif di `https://foxbiz.bikinsaas.com`. Record A `foxbiz` → `203.194.115.231` sudah terlihat di DNS publik dan server; sertifikat Let's Encrypt terbit untuk domain ini dan berlaku sampai 16 Februari 2027. HTTP dialihkan ke HTTPS, HSTS aktif, dan halaman login tampil normal.
+- Smoke melalui domain publik lulus: health database connected, penolakan sesi anonim dan origin asing, login owner dengan cookie Secure/HttpOnly/SameSite, akses CRM/Finance/POS, serta logout yang mencabut sesi. Simulasi perpanjangan `certbot renew --dry-run` berhasil; timer certbot aktif dan deploy hook me-reload Nginx.
 - Kredensial DNS/SSH tidak disimpan di repository. Backup dan staging dilewati sesuai permintaan. Deployment pertama tidak memiliki release aplikasi atau backup data sebelumnya untuk rollback.
 
 Hasil pemeriksaan dan hash source aplikasi dicatat di `PRODUCTION_RELEASE_RESULTS.json`. Panduan operasional tersedia di [USER_GUIDE.md](USER_GUIDE.md).
@@ -58,7 +59,7 @@ Hasil pemeriksaan dan hash source aplikasi dicatat di `PRODUCTION_RELEASE_RESULT
 
 Tes unit lulus 3/3, integrasi lokal lulus 54/54 pada database development terisolasi `foxbiz_sprint0`, serta lint dan typecheck lulus. Integrasi mencakup sesi, isolasi tenant/outlet, RBAC, POS, stok, purchasing, Finance, dan CRM. Pemeriksaan cleanup setelah tes menemukan nol tenant dengan awalan `test-`; tes integrasi tidak dijalankan pada database production.
 
-Smoke proxy production mengonfirmasi cookie Secure/HttpOnly, penolakan foreign-origin, serta logout/revocation. Pemeriksaan server pukul 03:47 WIB pada 18 November mengonfirmasi service aktif, database connected, port FoxBiz hanya di loopback, file owner mode 600 root:root, dan environment mode 640 root:foxbiz. Kontrol ini telah diperiksa, tetapi belum cukup untuk menyatakan situs siap digunakan publik: DNS masih NXDOMAIN dan HTTPS publik belum diuji.
+Smoke proxy production dan smoke domain publik mengonfirmasi cookie Secure/HttpOnly, penolakan foreign-origin, serta logout/revocation. Pemeriksaan server pukul 03:47 WIB pada 18 November mengonfirmasi service aktif, database connected, port FoxBiz hanya di loopback, file owner mode 600 root:root, dan environment mode 640 root:foxbiz. HTTPS publik dengan sertifikat valid sudah diuji dari luar server pada hari yang sama.
 
 Temuan lanjutan:
 
