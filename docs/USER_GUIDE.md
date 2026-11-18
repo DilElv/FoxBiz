@@ -3,7 +3,7 @@
 ## Masuk
 
 1. Buka `https://foxbiz.bikinsaas.com/login`.
-2. Masukkan kode bisnis `foxbiz`, email owner, dan password dari file kredensial privat yang diberikan administrator.
+2. Masukkan kode bisnis dari administrator (misalnya `foxbiz` atau kode bisnis Anda), email, dan password dari file kredensial privat yang diberikan administrator.
 3. Simpan file kredensial di tempat privat. UI saat ini belum menyediakan penggantian password; minta administrator merotasi password secara aman sebelum akun dipakai rutin. Jangan gunakan ulang password di layanan lain atau mengirim kredensial di grup/chat publik.
 
 ## Persiapan toko
@@ -43,7 +43,7 @@
 
 ## Kondisi awal dan batasan
 
-Database production baru hanya berisi tenant `foxbiz`, owner, role bawaan, serta outlet `Toko Utama`. Admin perlu menambah produk dan saldo awal stok sebelum kasir dapat bertransaksi. Sistem belum mencakup settlement EDC otomatis, perangkat printer khusus yang tervalidasi, refund pascalunas, loyalty, atau integrasi WhatsApp. Uji operasional toko nyata dan perangkat fisik belum dilakukan.
+Database production awalnya hanya berisi tenant `foxbiz`. Setiap bisnis baru dibuat tanpa produk, pelanggan, atau transaksi demo dan hanya berisi akun owner, role bawaan, serta outlet `Toko Utama`. Admin perlu menambah produk dan saldo awal stok sebelum kasir dapat bertransaksi. Sistem belum mencakup settlement EDC otomatis, perangkat printer khusus yang tervalidasi, refund pascalunas, loyalty, atau integrasi WhatsApp. Uji operasional toko nyata dan perangkat fisik belum dilakukan.
 
 ## Bantuan admin
 
