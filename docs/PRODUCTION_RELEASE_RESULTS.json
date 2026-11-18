@@ -1,7 +1,7 @@
 {
-  "verifiedAt": "2026-11-18T15:15:00+07:00",
+  "verifiedAt": "2026-11-18T21:15:00+07:00",
   "applicationVersion": "0.1.0",
-  "sourceCommit": "cf130c4f6bc15893db9d76db46367e0a2bfedd1f",
+  "sourceCommit": "e9c084287384183ea8c8b2ed1d9679771311de5a",
   "target": {
     "host": "203.194.115.231",
     "web": "foxbiz.bikinsaas.com",
@@ -9,39 +9,74 @@
     "node": "20.20.2",
     "postgresql": "16"
   },
-  "status": "deployed_public_https_verified",
-  "backup": "not_performed_as_requested",
+  "status": "sprint7_deployed_public_https_verified",
+  "backup": {
+    "status": "created_before_sprint7_migration",
+    "file": "/var/backups/foxbiz/foxbiz_production-20261118-192002.dump",
+    "bytes": 168534,
+    "verifiedWith": "pg_restore -l",
+    "localCopy": ".local/foxbiz_production-20261118-192002.dump"
+  },
   "staging": "not_used_as_requested",
   "gates": {
     "localUnitTests": { "passed": 3, "failed": 0 },
-    "localIntegrationTests": { "passed": 54, "failed": 0, "database": "foxbiz_sprint0" },
+    "localIntegrationTests": {
+      "passed": 64,
+      "failed": 0,
+      "execution": "one file at a time; multi-file runner hangs in this environment",
+      "suites": {
+        "tenant": 7,
+        "sprint1": 8,
+        "pos": 9,
+        "stock": 8,
+        "purchasing": 9,
+        "finance": 7,
+        "crm": 6,
+        "hris": 6,
+        "dashboard": 4
+      }
+    },
     "localLint": "pass",
     "localTypecheck": "pass",
     "webBuild": "pass",
     "apiBuild": "pass",
     "migration": {
       "status": "pass",
-      "migrationsApplied": 7,
+      "migrationsApplied": 8,
+      "latest": "20261118103815_sprint7_hris",
       "schemaUpToDate": true
     },
-    "productionBootstrap": "pass",
+    "productionBootstrap": "previously_verified",
     "apiService": "active",
     "webService": "active",
     "apiHealthDatabaseConnected": true,
     "originAllowlist": "pass",
-    "productionProxySmoke": {
+    "hris": {
       "status": "pass",
-      "checks": [
-        "foreign origin rejected",
-        "owner login through same-origin proxy",
-        "Secure and HttpOnly session cookie",
-        "owner session and outlet retrieval",
-        "CRM customer list",
-        "Finance metadata",
-        "POS product listing",
-        "POS customer lookup",
-        "logout revokes session"
-      ]
+      "employeePinsHashed": true,
+      "kioskMultiEmployee": true,
+      "photosRequired": true,
+      "watermarkRendered": true,
+      "watermarkBrightPixels": 3636,
+      "gpsStored": true,
+      "dailyMonthlyRecap": true,
+      "pdfExport": true,
+      "jpgDownload": true
+    },
+    "dashboard": {
+      "status": "pass",
+      "periods": ["today", "week", "month"],
+      "realSalesSeries": true,
+      "stockPurchaseAttendanceAlerts": true,
+      "permissionFiltered": true
+    },
+    "attendanceRetention": {
+      "status": "pass",
+      "timer": "foxbiz-attendance-purge.timer",
+      "enabled": true,
+      "schedule": "02:15 with randomized delay up to 5 minutes",
+      "manualRunResult": "success",
+      "removedFiles": 0
     },
     "publicDns": {
       "status": "pass",
@@ -57,27 +92,41 @@
     "certbotRenewalDryRun": "pass",
     "publicSmoke": {
       "status": "pass",
+      "checks": 15,
+      "tenant": "dilo",
       "url": "https://foxbiz.bikinsaas.com",
-      "checks": [
-        "HTTP redirects to HTTPS",
-        "public login page renders with HSTS",
-        "public health reports database connected",
-        "anonymous session rejected",
-        "foreign origin rejected",
-        "owner login with Secure/HttpOnly/SameSite cookie",
+      "items": [
+        "owner login through same-origin proxy",
+        "Secure and HttpOnly session cookie",
         "owner session and outlet retrieval",
-        "CRM customer list",
-        "Finance metadata",
-        "POS product and customer lookup",
-        "logout revokes session"
+        "real dashboard summary, series and alerts",
+        "employee creation with hidden PIN hash",
+        "kiosk listing for new employee",
+        "clock-in with mandatory watermarked photo and GPS",
+        "recap includes attendance record",
+        "authenticated JPG download",
+        "daily recap PDF export",
+        "clock-out with photo and duration",
+        "tenant-scoped API responses"
       ]
     }
+  },
+  "release": {
+    "path": "/opt/foxbiz/releases/sprint7-20261118",
+    "activeSymlink": "/opt/foxbiz/current",
+    "package": "foxbiz-sprint7-20261118.tar.gz",
+    "packageBytes": 278878,
+    "sha256": "7c13a7e429c84b33a45f8244d5c577cce22fec1a4f2725f61b973d59c5ab0469",
+    "webBuildId": "OK0_YKjUZ_y14JLtDghxq7"
   },
   "runtime": {
     "webPort": "127.0.0.1:3500",
     "apiPort": "127.0.0.1:4500",
     "httpVirtualHost": "enabled; redirects to HTTPS",
-    "httpsVirtualHost": "enabled"
+    "httpsVirtualHost": "enabled",
+    "clientMaxBodySize": "8m",
+    "attendanceDirectory": "/var/lib/foxbiz/attendance",
+    "attendanceRetentionDays": 180
   },
   "bootstrap": {
     "tenantSlug": "foxbiz",
@@ -89,9 +138,10 @@
     "Server permits root SSH login and password authentication",
     "Other applications listen on wildcard interfaces at ports 3100 and 3101; access controls require review",
     "Password rotation is available through the administrator API, not the current UI",
-    "Operational UAT not performed",
-    "Physical-device testing not performed",
-    "Production-scale performance not measured",
-    "No prior application release or backup exists for rollback on this first deployment"
+    "HRIS does not include payroll, overtime, shifts, leave, face verification, offline attendance or biometric-device integration",
+    "Attendance retention removes photo files only; attendance metadata remains",
+    "Kiosk requires internet, a camera and browser location permission",
+    "Dashboard covers one active outlet at a time; large-data performance not measured",
+    "Operational UAT and physical-device testing not performed"
   ]
 }
