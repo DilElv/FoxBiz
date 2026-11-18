@@ -33,6 +33,7 @@ model Tenant {
   employees Employee[]
   attendances Attendance[]
   @@unique([id, slug])
+  @@index([slug])
   @@map("tenants")
 }
 
@@ -85,6 +86,7 @@ model User {
   voidedFinanceEntries FinanceEntry[] @relation("FinanceVoider")
   @@unique([tenantId, id])
   @@unique([tenantId, email])
+  @@index([email])
   @@index([tenantId, status])
   @@map("users")
 }

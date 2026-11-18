@@ -29,6 +29,7 @@
     "smoke:ui": "node scripts/smoke-ui.mjs",
     "smoke:sprint1": "node scripts/smoke-sprint1.mjs",
     "smoke:pos": "node scripts/smoke-pos.mjs",
+    "smoke:registration": "node scripts/smoke-registration.mjs",
     "smoke:inventory": "node scripts/smoke-inventory.mjs",
     "smoke:purchasing": "node scripts/smoke-purchasing.mjs",
     "smoke:finance": "node scripts/smoke-finance.mjs",

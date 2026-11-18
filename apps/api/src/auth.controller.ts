@@ -1,26 +1,28 @@
 import { Body, Controller, ForbiddenException, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
-import { IsEmail, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { AuthenticatedRequest } from './auth.types';
-
-class LoginDto {
-  @IsString() @Matches(/^[a-z0-9-]{1,80}$/) tenantSlug!: string;
-  @IsEmail() @MaxLength(254) email!: string;
-  @IsString() @MinLength(8) @MaxLength(72) password!: string;
-}
+import { LoginDto, RegisterDto } from './auth.dto';
 
 @Controller()
 export class AuthController {
   constructor(private readonly auth: AuthService, private readonly config: ConfigService) {}
 
+  @Post('auth/register')
+  async register(@Body() body: RegisterDto, @Req() request: AuthenticatedRequest, @Res({ passthrough: true }) response: Response) {
+    this.checkOrigin(request);
+    const result = await this.auth.register(body, request.ip ?? 'local');
+    this.setSession(response, result.token);
+    return { user: result.user };
+  }
+
   @Post('auth/login')
   async login(@Body() body: LoginDto, @Req() request: AuthenticatedRequest, @Res({ passthrough: true }) response: Response) {
     this.checkOrigin(request);
     const result = await this.auth.login(body.tenantSlug, body.email, body.password, request.ip ?? 'local');
-    response.cookie('foxbiz_session', result.token, { httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production', maxAge: Number(this.config.get('SESSION_TTL_HOURS')) * 60 * 60 * 1000, path: '/' });
+    this.setSession(response, result.token);
     return { user: result.user };
   }
 
@@ -46,5 +48,9 @@ export class AuthController {
 
   private checkOrigin(request: AuthenticatedRequest) {
     if (request.headers.origin && request.headers.origin !== this.config.get<string>('WEB_ORIGIN')) throw new ForbiddenException('Origin tidak diizinkan.');
+  }
+
+  private setSession(response: Response, token: string) {
+    response.cookie('foxbiz_session', token, { httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production', maxAge: Number(this.config.get('SESSION_TTL_HOURS', '8')) * 60 * 60 * 1000, path: '/' });
   }
 }

@@ -1,0 +1,88 @@
+{
+  "verifiedAt": "2026-11-18T16:04:24.962Z",
+  "reports": [
+    {
+      "viewport": "desktop",
+      "categoryFilter": true,
+      "barcodeSearch": true,
+      "quantityButtons": true,
+      "customerSelection": true,
+      "customerHoldReceipt": true,
+      "cash": true,
+      "manualEdc": true,
+      "holdResume": true,
+      "historyReprint": true,
+      "lostResponseRecovery": true,
+      "overflow": {
+        "cart": false,
+        "cash": false,
+        "receipt": false,
+        "edc": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "tablet",
+      "categoryFilter": true,
+      "barcodeSearch": true,
+      "quantityButtons": true,
+      "customerSelection": true,
+      "customerHoldReceipt": true,
+      "cash": true,
+      "manualEdc": true,
+      "holdResume": true,
+      "historyReprint": true,
+      "lostResponseRecovery": true,
+      "overflow": {
+        "cart": false,
+        "cash": false,
+        "receipt": false,
+        "edc": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "mobile390",
+      "categoryFilter": true,
+      "barcodeSearch": true,
+      "quantityButtons": true,
+      "customerSelection": true,
+      "customerHoldReceipt": true,
+      "cash": true,
+      "manualEdc": true,
+      "holdResume": true,
+      "historyReprint": true,
+      "lostResponseRecovery": true,
+      "overflow": {
+        "cart": false,
+        "cash": false,
+        "receipt": false,
+        "edc": false
+      },
+      "errors": []
+    },
+    {
+      "viewport": "mobile360",
+      "categoryFilter": true,
+      "barcodeSearch": true,
+      "quantityButtons": true,
+      "customerSelection": true,
+      "customerHoldReceipt": true,
+      "cash": true,
+      "manualEdc": true,
+      "holdResume": true,
+      "historyReprint": true,
+      "lostResponseRecovery": true,
+      "overflow": {
+        "cart": false,
+        "cash": false,
+        "receipt": false,
+        "edc": false
+      },
+      "errors": []
+    },
+    {
+      "permissionUI": true
+    }
+  ]
+}

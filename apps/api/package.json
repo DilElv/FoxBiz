@@ -11,7 +11,7 @@
     "db:migrate": "node scripts/database.cjs deploy",
     "db:status": "node scripts/database.cjs status",
     "test": "node --require ts-node/register --test test/foundation.test.ts",
-    "test:integration": "node --require ts-node/register --test --test-concurrency=1 test/tenant.integration.test.ts test/sprint1.integration.test.ts test/pos.integration.test.ts test/stock.integration.test.ts test/purchasing.integration.test.ts test/finance.integration.test.ts test/crm.integration.test.ts test/hris.integration.test.ts test/dashboard.integration.test.ts",
+    "test:integration": "node --require ts-node/register --test --test-concurrency=1 test/tenant.integration.test.ts test/registration.integration.test.ts test/sprint1.integration.test.ts test/pos.integration.test.ts test/stock.integration.test.ts test/purchasing.integration.test.ts test/finance.integration.test.ts test/crm.integration.test.ts test/hris.integration.test.ts test/dashboard.integration.test.ts",
     "attendance:purge": "node scripts/purge-attendance.cjs",
     "db:seed": "ts-node scripts/seed.ts"
   },

@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { isIP } from 'node:net';
 
 export const dynamic = 'force-dynamic';
-const allowed = /^(auth\/(login|logout)|me|foundation\/outlets|dashboard|organization|outlets(?:\/[a-f0-9-]{36})?|users(?:\/[a-f0-9-]{36})?|roles(?:\/[a-f0-9-]{36})?|permissions|categories(?:\/[a-f0-9-]{36})?|products(?:\/[a-f0-9-]{36})?|inventory\/(balances|movements|opening|threshold|destinations|documents(?:\/by-key\/[a-f0-9-]{36}|\/[a-f0-9-]{36}(?:\/receive)?)?)|audit-logs|pos\/(categories|products|quote|holds(?:\/[a-f0-9-]{36})?)|sales(?:\/(?:[a-f0-9-]{36}|by-key\/[a-f0-9-]{36}))?)$/;
+const allowed = /^(auth\/(login|logout|register)|me|foundation\/outlets|dashboard|organization|outlets(?:\/[a-f0-9-]{36})?|users(?:\/[a-f0-9-]{36})?|roles(?:\/[a-f0-9-]{36})?|permissions|categories(?:\/[a-f0-9-]{36})?|products(?:\/[a-f0-9-]{36})?|inventory\/(balances|movements|opening|threshold|destinations|documents(?:\/by-key\/[a-f0-9-]{36}|\/[a-f0-9-]{36}(?:\/receive)?)?)|audit-logs|pos\/(categories|products|quote|holds(?:\/[a-f0-9-]{36})?)|sales(?:\/(?:[a-f0-9-]{36}|by-key\/[a-f0-9-]{36}))?)$/;
 const hrisAllowed = /^hris\/(employees(?:\/[a-f0-9-]{36})?|kiosk|attendance(?:\/monthly|\/export)?|attendance\/(?:clock-in|clock-out)|attendance\/[a-f0-9-]{36}\/photo\/(?:in|out))$/;
 
 async function proxy(request: NextRequest, context: { params: Promise<{ path: string[] }> }) {
@@ -18,6 +19,9 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
     if (!multipart && !contentType.startsWith('application/json')) return NextResponse.json({ error: { message: 'Gunakan JSON atau unggahan foto.' } }, { status: 415 });
   }
   const headers = new Headers({ Origin: process.env.WEB_ORIGIN ?? 'http://localhost:3000' });
+  // Nginx overwrites X-Real-IP; never pass the caller's forwarded-for chain.
+  const clientIp = request.headers.get('x-real-ip');
+  if (clientIp && isIP(clientIp)) headers.set('X-Forwarded-For', clientIp);
   if (multipart) headers.set('Content-Type', contentType);
   else headers.set('Content-Type', 'application/json');
   const cookie = request.headers.get('cookie');

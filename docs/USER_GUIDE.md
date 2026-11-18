@@ -1,21 +1,29 @@
 # Panduan Penggunaan FoxBiz
 
-## Masuk
+## Daftar dan masuk
 
 1. Buka `https://foxbiz.bikinsaas.com/login`.
-2. Masukkan kode bisnis dari administrator (misalnya `foxbiz` atau kode bisnis Anda), email, dan password dari file kredensial privat yang diberikan administrator.
-3. Simpan file kredensial di tempat privat. UI saat ini belum menyediakan penggantian password; minta administrator merotasi password secara aman sebelum akun dipakai rutin. Jangan gunakan ulang password di layanan lain atau mengirim kredensial di grup/chat publik.
+2. Untuk bisnis baru, pilih **Daftarkan bisnis**. Isi nama owner, email, password minimal 12 karakter (maksimum 72 byte), nama/kode bisnis, serta nama/kode outlet pertama. Pendaftaran langsung membuat sesi owner.
+3. Untuk akun yang sudah ada, masukkan email dan password. **Gunakan kode bisnis (opsional)** dipakai bila email yang sama memiliki akun lama di beberapa bisnis.
+4. Simpan kredensial di tempat privat. UI saat ini belum menyediakan reset password melalui email; minta administrator merotasi password secara aman bila diperlukan. Jangan gunakan ulang password di layanan lain atau mengirim kredensial di grup/chat publik.
+
+## Satu akun, banyak outlet
+
+1. Satu akun owner mengelola satu bisnis dengan banyak outlet. Kode bisnis mengidentifikasi bisnis; setiap outlet memiliki kode tersendiri yang harus unik di dalam bisnis tersebut, misalnya `PUSAT` dan `CABANG-02`.
+2. Tambah outlet melalui **Pengaturan → Bisnis & outlet → Tambah outlet**. Setelah disimpan, pilihan outlet di header langsung diperbarui. Owner dengan akses seluruh outlet otomatis bisa membuka outlet baru tanpa login ulang.
+3. Pilih outlet aktif pada header, termasuk di ponsel. Penjualan, stok, dan absensi mengikuti outlet yang dipilih serta izin pengguna.
+4. Tambahkan banyak karyawan pada **HRIS → Karyawan** dan pilih outlet masing-masing. Karyawan absensi memakai PIN sendiri; akun kasir dibuat terpisah melalui **Pengaturan → Pengguna**.
 
 ## Persiapan toko
 
 1. Periksa nama bisnis dan zona waktu pada Pengaturan.
 2. Tambahkan outlet, kategori, produk, dan pengguna. Isi SKU unik serta harga jual; tetapkan peran dan cakupan outlet sesuai tugas.
-3. Tambahkan saldo awal stok setiap produk/outlet sebelum mulai menjual. Akun production baru hanya berisi outlet `Toko Utama`; tidak ada barang, pelanggan, atau transaksi demo.
+3. Tambahkan saldo awal stok setiap produk/outlet sebelum mulai menjual. Bisnis baru berisi outlet pertama sesuai isian pendaftaran; tidak ada barang, pelanggan, atau transaksi demo.
 4. Pastikan setiap staf memakai akun sendiri. Jangan berbagi akun owner.
 
 ## Operasional POS
 
-1. Buka **Kasir/POS**, pilih outlet yang menjadi cakupan pengguna, cari produk, lalu masukkan ke keranjang.
+1. Buka **Kasir/POS**, pilih outlet yang menjadi cakupan pengguna, gunakan tombol kategori atau pencarian nama/SKU/barcode, lalu pilih kartu produk. Keranjang memiliki kontrol tambah/kurang dan input kuantitas; perkiraan total diperiksa kembali oleh server saat **Tinjau pembayaran**.
 2. Pemilihan pelanggan bersifat opsional. Kasir dapat mencari pelanggan yang sudah terdaftar atau lanjut tanpa pelanggan.
 3. Pilih tahan keranjang untuk menyimpan transaksi belum dibayar. Stok tidak dicadangkan oleh hold.
 4. Untuk tunai, masukkan uang diterima dan catat pembayaran. Untuk EDC manual, gunakan hanya setelah pembayaran dikonfirmasi pada terminal fisik; aplikasi tidak menghubungi bank.
@@ -56,7 +64,7 @@ Dashboard menampilkan data aktual outlet yang dipilih: penjualan, transaksi, ite
 
 ## Kondisi awal dan batasan
 
-Database production awalnya hanya berisi tenant `foxbiz`. Setiap bisnis baru dibuat tanpa produk, pelanggan, atau transaksi demo dan hanya berisi akun owner, role bawaan, serta outlet `Toko Utama`. Admin perlu menambah produk dan saldo awal stok sebelum kasir dapat bertransaksi. Sistem belum mencakup settlement EDC otomatis, perangkat printer khusus yang tervalidasi, refund pascalunas, loyalty, integrasi WhatsApp, penggajian/lembur HRIS, atau verifikasi wajah. Uji operasional toko nyata dan perangkat fisik belum dilakukan.
+Setiap bisnis baru dibuat tanpa produk, pelanggan, karyawan, atau transaksi demo dan hanya berisi akun owner, role bawaan, serta outlet pertama sesuai formulir. Admin perlu menambah produk dan saldo awal stok sebelum kasir dapat bertransaksi. Kartu produk POS saat ini memakai ikon produk; unggah foto produk belum tersedia. Sistem belum mencakup verifikasi email/reset password mandiri, settlement EDC otomatis, perangkat printer khusus yang tervalidasi, refund pascalunas, loyalty, integrasi WhatsApp, penggajian/lembur HRIS, atau verifikasi wajah. Uji operasional toko nyata dan perangkat fisik belum dilakukan.
 
 ## Bantuan admin
 

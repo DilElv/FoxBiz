@@ -1,74 +1,59 @@
 # Deployment FoxBiz — foxbiz.bikinsaas.com
 
-Target rilis: source Sprint 0–7, versi aplikasi `0.1.0`. Sprint 7 menambahkan HRIS: karyawan, kiosk absensi PIN, foto ber-watermark, rekap harian/bulanan, dan retensi foto 180 hari. Backup dan staging awal dilewati atas arahan pengguna; rilis Sprint 7 membuat backup database production sebelum migrasi dijalankan.
+Rilis aktif Sprint 8 (`0.1.0`) menambahkan pendaftaran bisnis mandiri, login dengan kode bisnis opsional, pemilihan outlet yang langsung diperbarui, dan tampilan POS dengan katalog serta keranjang di sisi kanan pada layar lebar. Alur HRIS per outlet mencakup kiosk PIN, foto masuk dan pulang, unduhan JPG, dan rekap PDF.
 
 ## Infrastruktur
 
-- Host: `203.194.115.231`, Ubuntu, Nginx, Node.js 20.20.2 dan npm 10.8.2.
-- Domain: `foxbiz.bikinsaas.com`; record A harus menunjuk ke IP host di DNS Rumahweb.
-- Web: `127.0.0.1:3500`, API: `127.0.0.1:4500`; diakses melalui Nginx dan proxy same-origin Next.js.
-- Database terpisah: `foxbiz_production`, role `foxbiz_app`, PostgreSQL 16 lokal port 5432. Gate development memakai PostgreSQL 17; kompatibilitas production harus dikonfirmasi lewat migrasi dan smoke host aktual.
-- Release: `/opt/foxbiz/releases/sprint7-20261118`, symlink aktif `/opt/foxbiz/current`.
-- Service: `foxbiz-api.service` dan `foxbiz-web.service`, user sistem `foxbiz`, restart otomatis saat gagal.
-- Foto absensi: `/var/lib/foxbiz/attendance`, dibuat oleh `StateDirectory=foxbiz/attendance` dan diizinkan `ReadWritePaths`. Foto disimpan maksimal 180 hari oleh timer `foxbiz-attendance-purge.timer` (02.15, toleransi acak 5 menit).
-- Konfigurasi privat: `/etc/foxbiz/production.env` (root:foxbiz, mode 640). Jangan salin ke Git. Wajib memuat `ATTENDANCE_DIR=/var/lib/foxbiz/attendance` dan `ATTENDANCE_RETENTION_DAYS=180`.
+- Host `203.194.115.231` menjalankan Ubuntu, Nginx, Node.js 20.20.2, dan npm 10.8.2. Record A `foxbiz.bikinsaas.com` dikelola di DNS Rumahweb.
+- Web `127.0.0.1:3500` dan API `127.0.0.1:4500` diakses melalui Nginx dan proxy same-origin Next.js. Nginx menyediakan HTTPS dan mengizinkan unggahan hingga 8 MB untuk foto absensi dengan batas aplikasi 5 MB.
+- Database `foxbiz_production` menggunakan PostgreSQL 16 pada loopback port 5432 dengan role aplikasi `foxbiz_app`.
+- Symlink `/opt/foxbiz/current` menunjuk ke `/opt/foxbiz/releases/sprint8-20261118`. Service `foxbiz-api.service` dan `foxbiz-web.service` berjalan sebagai user sistem `foxbiz`.
+- File foto ada di `/var/lib/foxbiz/attendance`. Timer `foxbiz-attendance-purge.timer` berjalan pukul 02.15 waktu server dengan toleransi acak hingga 5 menit. Retensi 180 hari berlaku pada file foto. Metadata absensi tetap tersimpan.
+- Konfigurasi privat ada di `/etc/foxbiz/production.env` dengan pemilik `root:foxbiz` dan mode `640`. Setel `ATTENDANCE_DIR=/var/lib/foxbiz/attendance` dan `ATTENDANCE_RETENTION_DAYS=180`. Simpan kredensial di luar repositori.
 
 ## Urutan rilis
 
-1. Periksa situs aktif, resource, port dan konflik direktori; gunakan database/service FoxBiz tersendiri.
-2. Buat backup database production sebelum migrasi: `pg_dump -Fc` ke `/var/backups/foxbiz/` dan verifikasi file dapat dibaca. Jangan menjalankan migrasi tanpa backup yang selesai.
-3. Upload source tanpa `.env`, `.local`, dependency/build lokal, lalu `npm ci --include=dev` di host Linux.
-4. Generate Prisma, build web/API, jalankan `npm run db:migrate` lalu `npm run db:status` dengan environment production.
-5. Jalankan `scripts/bootstrap-production.cjs` secara eksplisit dengan `FOXBIZ_BOOTSTRAP_FILE` privat. Skrip menolak tenant yang sudah ada, membuat owner/role/outlet tanpa produk atau transaksi demo.
-6. Aktifkan symlink dan service; pastikan `foxbiz-attendance-purge.timer` aktif, lalu periksa API langsung serta halaman web lokal.
-7. Pasang virtual host HTTP hanya untuk ACME. Setelah DNS benar, terbitkan sertifikat Let's Encrypt, pasang konfigurasi HTTPS dan jalankan `nginx -t` sebelum reload. Nginx mengizinkan unggahan 8 MB agar foto absensi 5 MB dapat lewat proxy.
-8. Jalankan smoke production pada tenant fixture tersendiri, verifikasi cleanup, unggah foto absensi, unduh JPG/PDF, dan periksa status service/log. Tidak ada UAT operasional atau uji perangkat fisik dalam rilis ini.
+1. Siapkan direktori rilis baru di `/opt/foxbiz/releases/`. Unggah source tanpa `.env`, `.local`, dependency, atau build lokal. Jalankan `npm ci --include=dev`, `npm run prisma:generate`, dan `npm run build` di host Linux dengan konfigurasi production.
+2. Sebelum migrasi, buat backup database dengan `pg_dump -Fc` di `/var/backups/foxbiz/`. Periksa arsip dengan `pg_restore --list` dan catat SHA-256.
+3. Jalankan `npm run db:migrate` dan `npm run db:status` dari direktori rilis baru dengan environment production. `scripts/bootstrap-production.cjs` hanya digunakan jika administrator perlu membuat tenant awal melalui provisioning privat. Pendaftaran dari `/register` tersedia untuk tenant baru.
+4. Catat target symlink lama, alihkan `/opt/foxbiz/current` secara atomik, lalu restart service API dan web. Periksa health API, halaman login, dan timer purge. Aktivasi Sprint 8 mengembalikan symlink dan me-restart service secara otomatis jika health check setelah aktivasi gagal.
+5. Periksa health publik, login, registrasi, outlet kedua, kiosk, foto absensi, dan ekspor di tenant fixture. Hapus fixture dan verifikasi nol baris tenant, sesi, dan absensi fixture serta direktori fotonya sudah hilang.
 
-Template service dan Nginx ada di `infra/production/`. Template HTTP mengembalikan 503 sampai HTTPS siap. Jangan aktifkan template HTTPS sebelum sertifikat tersedia. Pengujian aplikasi sebelum propagasi DNS dapat menggunakan override resolusi klien; ini bukan bukti domain publik sudah aktif.
+Template service, timer, dan Nginx tersedia di `infra/production/`. Untuk pemasangan domain baru, aktifkan template HTTP untuk ACME, pastikan DNS mengarah ke server, terbitkan sertifikat Let's Encrypt, lalu periksa konfigurasi dengan `nginx -t` sebelum me-reload Nginx dengan HTTPS.
 
 ## Operasi
 
 ```bash
-systemctl status foxbiz-api foxbiz-web --no-pager
-systemctl status foxbiz-attendance-purge.timer --no-pager
+systemctl status foxbiz-api foxbiz-web foxbiz-attendance-purge.timer --no-pager
+systemctl list-timers foxbiz-attendance-purge.timer --no-pager
 journalctl -u foxbiz-api -u foxbiz-web --since '15 minutes ago' --no-pager
 journalctl -u foxbiz-attendance-purge --since '7 days ago' --no-pager
+readlink -f /opt/foxbiz/current
 curl --fail http://127.0.0.1:4500/api/v1/health
 curl --fail https://foxbiz.bikinsaas.com/healthz
 nginx -t
 systemctl status certbot.timer --no-pager
-pg_dump -Fc foxbiz_production > /var/backups/foxbiz/foxbiz_production-$(date +%Y%m%d-%H%M).dump
 ```
 
-Nginx menulis `/var/log/nginx/foxbiz-access.log` dan `/var/log/nginx/foxbiz-error.log`; service menulis journal. Timer purge menjalankan `apps/api/scripts/purge-attendance.cjs` setiap hari dan hanya menghapus file foto, bukan metadata absensi. Ini menyediakan log lokal dan pemulihan proses, belum termasuk layanan alert eksternal. Certbot harus memiliki renewal hook untuk reload Nginx sesudah sertifikat diperbarui.
+Nginx mencatat akses dan error di `/var/log/nginx/foxbiz-access.log` dan `/var/log/nginx/foxbiz-error.log`. Timer menjalankan `apps/api/scripts/purge-attendance.cjs`. Hook pembaruan sertifikat memuat ulang Nginx setelah sertifikat diperbarui.
 
-## Penghentian dan pemulihan
+Jika rilis perlu dikembalikan, periksa kompatibilitas schema lalu alihkan symlink ke rilis sebelumnya dan restart hanya service FoxBiz. Migrasi SQL tetap berlaku setelah symlink dikembalikan. Pemulihan database dari backup memerlukan penghentian penulisan dan penilaian dampak terhadap data yang dibuat setelah backup. Backup `pg_dump` mencakup database.
 
-Rilis Sprint 7 menyimpan backup database production sebelum migrasi di `/var/backups/foxbiz/`. Jika smoke gagal, hentikan service FoxBiz atau tampilkan maintenance pada virtual host FoxBiz; jangan menyentuh service/database aplikasi lain. Symlink dapat dikembalikan ke release sebelumnya setelah kompatibilitas schema diperiksa. Migrasi SQL tidak otomatis dibalik; pemulihan penuh memerlukan restore backup dan penghentian aplikasi yang menulis ke database.
+## Hasil Sprint 8
 
-## Status
+Pada 18 November 2026 pukul 23.31 WIB, service API dan web aktif, timer purge aktif dan enabled, serta health API mengonfirmasi database terhubung. Sembilan migrasi tercatat dan Prisma menyatakan schema mutakhir. `/healthz`, `/login`, dan `/register` merespons HTTP 200 melalui HTTPS publik dengan sertifikat yang tervalidasi.
 
-Status runtime per 18 November 2026:
+- Backup pramigrasi `/var/backups/foxbiz/foxbiz_production-sprint8-20261118-223147.dump` lolos `pg_restore --list`. SHA-256 `9b490fb920bde58491d06cb86eb45c6ab504c63141526fa793de51f045c585bf`.
+- Paket `foxbiz-sprint8-20261118.tar.gz` memiliki SHA-256 `785e9962840356f428bc6261f87140bfae5d7754e9cde10db11e2ff1497c5ae5`. ID build web aktif `BNN6vBgyunAG5Ps8wPCwc`. Source aplikasi cocok dengan paket rilis. Beberapa skrip smoke di repositori diperbarui sesudah paket dibuat.
+- Tes unit 3/3 dan integrasi API 73/73 lulus. Integrasi dijalankan satu suite per proses pada database development. Lint, typecheck, build lokal, dan build production lulus.
+- Smoke browser auth lulus di desktop dan mobile 360 px. Smoke POS lulus di desktop, tablet, mobile 390 px, serta mobile 360 px. Hasil tercatat di [SPRINT_8_AUTH_UI_RESULTS.json](SPRINT_8_AUTH_UI_RESULTS.json) dan [SPRINT_8_POS_UI_RESULTS.json](SPRINT_8_POS_UI_RESULTS.json).
+- Smoke publik production mencatat 19 pemeriksaan lulus. Pemeriksaan pasca-cleanup menemukan nol tenant, sesi, dan baris absensi fixture serta mengonfirmasi direktori foto fixture sudah hilang. Bukti tercatat di [SPRINT_8_PRODUCTION_SMOKE.json](SPRINT_8_PRODUCTION_SMOKE.json).
 
-- Build production Next.js/NestJS lulus di Ubuntu/Node 20.
-- Ketujuh migrasi berhasil diterapkan pada database baru `foxbiz_production`; `db:status` menyatakan schema up to date.
-- Tenant `foxbiz`, akun owner, role bawaan dan outlet MAIN dibuat tanpa data demo transaksi/produk. Kredensial awal disimpan root-only di `/etc/foxbiz/initial-owner.json`; salinan lokal privat berada di `.local/foxbiz-owner-credentials.json` dan diabaikan Git. Rotasi password dilakukan administrator melalui API karena UI belum mendukungnya; pembaruan pengguna mencabut sesi pengguna tersebut.
-- `foxbiz-api.service` dan `foxbiz-web.service` aktif; health API menyatakan database connected. Pengujian lokal melalui proxy lulus untuk login, cookie Secure/HttpOnly, session, CRM list, Finance metadata, POS products/customer lookup, serta logout/revocation. Foreign-origin ditolak 403 setelah perbaikan proxy.
-- Situs publik aktif di `https://foxbiz.bikinsaas.com`. Record A `foxbiz` → `203.194.115.231` sudah terlihat di DNS publik dan server; sertifikat Let's Encrypt terbit untuk domain ini dan berlaku sampai 16 Februari 2027. HTTP dialihkan ke HTTPS, HSTS aktif, dan halaman login tampil normal.
-- Smoke melalui domain publik lulus: health database connected, penolakan sesi anonim dan origin asing, login owner dengan cookie Secure/HttpOnly/SameSite, akses CRM/Finance/POS, serta logout yang mencabut sesi. Simulasi perpanjangan `certbot renew --dry-run` berhasil; timer certbot aktif dan deploy hook me-reload Nginx.
-- Kredensial DNS/SSH tidak disimpan di repository. Backup dan staging dilewati sesuai permintaan. Deployment pertama tidak memiliki release aplikasi atau backup data sebelumnya untuk rollback.
+Panduan operasional ada di [USER_GUIDE.md](USER_GUIDE.md). Catatan rilis sebelumnya tersimpan di [PRODUCTION_RELEASE_RESULTS.json](PRODUCTION_RELEASE_RESULTS.json).
 
-Hasil pemeriksaan dan hash source aplikasi dicatat di `PRODUCTION_RELEASE_RESULTS.json`. Panduan operasional tersedia di [USER_GUIDE.md](USER_GUIDE.md).
+## Batasan
 
-## Pengujian dan penilaian keamanan
-
-Tes unit lulus 3/3, integrasi lokal lulus 54/54 pada database development terisolasi `foxbiz_sprint0`, serta lint dan typecheck lulus. Integrasi mencakup sesi, isolasi tenant/outlet, RBAC, POS, stok, purchasing, Finance, dan CRM. Pemeriksaan cleanup setelah tes menemukan nol tenant dengan awalan `test-`; tes integrasi tidak dijalankan pada database production.
-
-Smoke proxy production dan smoke domain publik mengonfirmasi cookie Secure/HttpOnly, penolakan foreign-origin, serta logout/revocation. Pemeriksaan server pukul 03:47 WIB pada 18 November mengonfirmasi service aktif, database connected, port FoxBiz hanya di loopback, file owner mode 600 root:root, dan environment mode 640 root:foxbiz. HTTPS publik dengan sertifikat valid sudah diuji dari luar server pada hari yang sama.
-
-Temuan lanjutan:
-
-- SSH efektif mengizinkan `PermitRootLogin yes` dan `PasswordAuthentication yes`. Administrator server perlu meninjau akses berbasis key dan akun non-root setelah memastikan jalur akses pengganti bekerja. Konfigurasi SSH global tidak diubah dalam deployment ini.
-- Aplikasi lain mendengarkan pada alamat wildcard port 3100/3101. Perlu verifikasi kebutuhan akses publik dan aturan firewall bersama pemilik aplikasi; konfigurasi aplikasi lain tidak diubah.
-- Pembatasan percobaan login berada dalam memori proses API (10 percobaan per menit per identitas klien). Restart mereset penghitung dan beberapa proses tidak berbagi penghitung; perlindungan ini perlu ditinjau jika runtime diperluas.
-- Penilaian ini berdasarkan tes otomatis, smoke, dan pemeriksaan konfigurasi; bukan penetration test menyeluruh. UAT toko, perangkat fisik, dan performa production belum diverifikasi.
+- Rate limit per identitas klien adalah 5 permintaan registrasi dan 10 login per menit. Penghitung ada di memori proses API dan akan ter-reset ketika proses dimulai ulang. Jika API dijalankan di beberapa proses, setiap proses memiliki penghitung sendiri.
+- Verifikasi email, reset password mandiri, dan unggah foto produk belum tersedia.
+- HRIS belum mencakup payroll, lembur, shift, cuti, verifikasi wajah, penggunaan offline, atau integrasi perangkat biometrik.
+- UAT toko, pengujian perangkat fisik, dan pengujian beban production belum dilakukan.

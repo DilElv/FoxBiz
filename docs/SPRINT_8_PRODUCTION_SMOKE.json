@@ -1,0 +1,118 @@
+{
+  "verifiedAt": "2026-11-18T16:10:46.605423+00:00",
+  "checks": [
+    {
+      "name": "anonymous rejected",
+      "ok": true,
+      "detail": "401"
+    },
+    {
+      "name": "foreign origin rejected",
+      "ok": true,
+      "detail": "403"
+    },
+    {
+      "name": "owner login",
+      "ok": true,
+      "detail": "201"
+    },
+    {
+      "name": "owner session",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "outlet available",
+      "ok": true,
+      "detail": "MAIN"
+    },
+    {
+      "name": "dashboard",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "self registration",
+      "ok": true,
+      "detail": "201"
+    },
+    {
+      "name": "add second outlet",
+      "ok": true,
+      "detail": "201"
+    },
+    {
+      "name": "outlet list refresh",
+      "ok": true,
+      "detail": "['SMOKE', 'BRANCH2']"
+    },
+    {
+      "name": "employee creation",
+      "ok": true,
+      "detail": "201"
+    },
+    {
+      "name": "second employee creation",
+      "ok": true,
+      "detail": "201"
+    },
+    {
+      "name": "branch employee creation",
+      "ok": true,
+      "detail": "201"
+    },
+    {
+      "name": "multiple employees on outlet kiosk",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "outlet employee isolation",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "clock in with photo",
+      "ok": true,
+      "detail": "201"
+    },
+    {
+      "name": "attendance recap",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "watermarked JPG download",
+      "ok": true,
+      "detail": "200/23877"
+    },
+    {
+      "name": "attendance PDF export",
+      "ok": true,
+      "detail": "200/2619"
+    },
+    {
+      "name": "clock out with photo",
+      "ok": true,
+      "detail": "201"
+    }
+  ],
+  "fixture": {
+    "slug": "sprint8-smoke-1795018231",
+    "tenantId": "95501014-d3dd-461e-aaa3-3b2ffd7ed8c5",
+    "outletId": "8402828d-9eb0-4a2e-a382-00f4811a34b8",
+    "secondOutletId": "47d11d8c-4b20-45d3-a699-8cd4a6a81422",
+    "attendanceId": "85964503-a47a-44e9-936e-32ca62404a79"
+  },
+  "cleanup": {
+    "verifiedAt": "2026-11-18T16:31:35.510Z",
+    "sessionRevoked": true,
+    "sessionRevocationMethod": "Fixture sessions deleted in database",
+    "tenantRemoved": true,
+    "attendancePhotosRemoved": true,
+    "tenantCountAfterCleanup": 0,
+    "sessionCountAfterCleanup": 0,
+    "attendanceCountAfterCleanup": 0,
+    "runtimeHealthyAfterCleanup": true
+  }
+}

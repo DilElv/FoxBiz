@@ -24,7 +24,7 @@ try {
   const branch = await prisma.outlet.create({ data: { tenantId, name: 'Cabang Selatan', code: 'BRANCH' } });
   const product = await prisma.product.create({ data: { tenantId, sku: 'BUY-COFFEE', name: 'Kopi Verifikasi', sellingPrice: '18000', unit: 'pcs' } });
   async function login(page, email) {
-    await page.goto(`${base}/login`); await page.getByLabel('Kode bisnis').fill(slug); await page.getByLabel('Email', { exact: true }).fill(email); await page.getByLabel('Password', { exact: true }).fill(password); await page.getByRole('button', { name: 'Masuk', exact: true }).click(); await page.waitForURL(base + '/');
+    await page.goto(`${base}/login`); await page.getByRole('button', { name: 'Gunakan kode bisnis (opsional)' }).click(); await page.locator('input[name=tenantSlug]').fill(slug); await page.getByLabel('Email', { exact: true }).fill(email); await page.locator('input[name=password]').fill(password); await page.getByRole('button', { name: 'Masuk', exact: true }).click(); await page.waitForURL(base + '/');
   }
   async function switchOutlet(page, id, mobile) {
     if (!mobile) await page.getByLabel('Outlet aktif').selectOption(id);

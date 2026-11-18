@@ -8,6 +8,7 @@ import { HttpErrorFilter, requestLogger } from './http-observability';
 export async function createApp() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService);
+  app.getHttpAdapter().getInstance().set('trust proxy', 'loopback');
   app.setGlobalPrefix('api/v1');
   app.enableCors({ origin: config.getOrThrow<string>('WEB_ORIGIN'), credentials: true });
   app.use(requestLogger);

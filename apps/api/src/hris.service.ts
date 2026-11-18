@@ -98,6 +98,7 @@ export class HrisService {
     if (dto.pin !== undefined && dto.pin !== '' && !/^\d{6}$/.test(dto.pin)) throw new BadRequestException('PIN harus 6 digit angka.');
     if (!id && !dto.pin) throw new BadRequestException('PIN 6 digit wajib diisi untuk karyawan baru.');
     if (!dto.allOutlets && dto.outletIds.length === 0) throw new BadRequestException('Pilih minimal satu outlet atau aktifkan akses seluruh outlet.');
+    const pinHash = dto.pin ? await hashPassword(dto.pin) : undefined;
     return domainWrite(() => this.prisma.$transaction(async (tx) => {
       await tx.$queryRaw`SELECT id FROM tenants WHERE id = ${user.tenantId}::uuid FOR UPDATE`;
       const before = id ? found(await tx.employee.findFirst({ where: { id, tenantId: user.tenantId }, include: { outlets: { select: { outletId: true } } } })) : null;
@@ -105,7 +106,6 @@ export class HrisService {
         const outletCount = await tx.outlet.count({ where: { tenantId: user.tenantId, id: { in: dto.outletIds }, status: 'active' } });
         if (outletCount !== dto.outletIds.length) throw new BadRequestException('Outlet tidak valid atau tidak aktif.');
       }
-      const pinHash = dto.pin ? await hashPassword(dto.pin) : undefined;
       const data = { code, name, position, phone, status: dto.status, allOutlets: dto.allOutlets, ...(pinHash ? { pinHash } : {}) };
       const saved = before ? await tx.employee.update({ where: { id: before.id }, data, select: employeeSelect }) : await tx.employee.create({ data: { ...data, tenantId: user.tenantId, pinHash: pinHash! }, select: employeeSelect });
       await tx.employeeOutlet.deleteMany({ where: { tenantId: user.tenantId, employeeId: saved.id } });

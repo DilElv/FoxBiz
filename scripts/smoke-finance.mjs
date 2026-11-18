@@ -21,7 +21,7 @@ try {
   const main = await prisma.outlet.create({ data: { tenantId, name: 'Toko Utama', code: 'MAIN' } });
   const branch = await prisma.outlet.create({ data: { tenantId, name: 'Cabang Selatan', code: 'BRANCH' } });
   async function login(page, role = 'manager') {
-    await page.goto(`${base}/login`); await page.getByLabel('Kode bisnis').fill(slug); await page.getByLabel('Email', { exact: true }).fill(`${role}@test.local`); await page.getByLabel('Password', { exact: true }).fill(password);
+    await page.goto(`${base}/login`); await page.getByRole('button', { name: 'Gunakan kode bisnis (opsional)' }).click(); await page.locator('input[name=tenantSlug]').fill(slug); await page.getByLabel('Email', { exact: true }).fill(`${role}@test.local`); await page.locator('input[name=password]').fill(password);
     const response = page.waitForResponse((res) => res.url().endsWith('/api/v1/auth/login') && res.request().method() === 'POST', { timeout: 60000 });
     await page.getByRole('button', { name: 'Masuk', exact: true }).click(); expect((await response).status()).toBe(201);
     await page.waitForURL(base + '/', { waitUntil: 'domcontentloaded', timeout: 60000 });

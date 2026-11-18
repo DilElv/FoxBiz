@@ -42,9 +42,10 @@ try {
 
   async function login(page, email) {
     await page.goto(`${base}/login`);
-    await page.getByLabel('Kode bisnis').fill(slug);
+    await page.getByRole('button', { name: 'Gunakan kode bisnis (opsional)' }).click();
+    await page.locator('input[name=tenantSlug]').fill(slug);
     await page.getByLabel('Email', { exact: true }).fill(email);
-    await page.getByLabel('Password', { exact: true }).fill(password);
+    await page.locator('input[name=password]').fill(password);
     await page.getByRole('button', { name: 'Masuk', exact: true }).click();
     await page.waitForURL(base + '/');
   }

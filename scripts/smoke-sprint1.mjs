@@ -44,7 +44,8 @@ try {
     await page.goto(`${base}/login`); await expect(page.getByRole('heading', { name: 'Masuk ke FoxBiz' })).toBeVisible();
     await checkOverflow('login');
     await page.screenshot({ path: `docs/screenshots/sprint1-login-${viewport.name}.png`, fullPage: true });
-    await page.getByLabel('Kode bisnis').fill(slug); await page.getByLabel('Email', { exact: true }).fill('owner@test.local'); await page.getByLabel('Password', { exact: true }).fill(password);
+    await page.getByRole('button', { name: 'Gunakan kode bisnis (opsional)' }).click();
+    await page.locator('input[name=tenantSlug]').fill(slug); await page.getByLabel('Email', { exact: true }).fill('owner@test.local'); await page.locator('input[name=password]').fill(password);
     await page.getByRole('button', { name: 'Masuk', exact: true }).click(); await page.waitForURL(base + '/');
     await page.goto(`${base}/products`); await expect(page.getByRole('heading', { name: 'Produk & Kategori' })).toBeVisible();
     await page.getByRole('button', { name: 'Tambah produk', exact: true }).click();
@@ -87,7 +88,8 @@ try {
   }
   const context = await browser.newContext(); const page = await context.newPage();
   await page.goto(`${base}/products`); await page.waitForURL(`${base}/login`);
-  await page.getByLabel('Kode bisnis').fill(slug); await page.getByLabel('Email', { exact: true }).fill('cashier@test.local'); await page.getByLabel('Password', { exact: true }).fill(password); await page.getByRole('button', { name: 'Masuk', exact: true }).click(); await page.waitForURL(base + '/');
+  await page.getByRole('button', { name: 'Gunakan kode bisnis (opsional)' }).click();
+  await page.locator('input[name=tenantSlug]').fill(slug); await page.getByLabel('Email', { exact: true }).fill('cashier@test.local'); await page.locator('input[name=password]').fill(password); await page.getByRole('button', { name: 'Masuk', exact: true }).click(); await page.waitForURL(base + '/');
   await page.goto(`${base}/products`); await expect(page.getByRole('heading', { name: 'Produk & Kategori' })).toBeVisible(); await expect(page.getByRole('button', { name: 'Tambah produk', exact: true })).toHaveCount(0);
   await page.goto(`${base}/settings`); await expect(page.getByRole('heading', { name: 'Akses dibatasi' })).toBeVisible();
   reports.push({ permissionUI: true, protectedRedirect: true }); await context.close();
